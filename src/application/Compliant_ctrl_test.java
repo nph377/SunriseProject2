@@ -45,7 +45,7 @@ public class Compliant_ctrl_test extends RoboticsAPIApplication {
 	public void initialize() {
 		logger.info("init");
 		ctrl_mode = new  CartesianImpedanceControlMode();
-		ctrl_mode.parametrize(CartDOF.Z).setStiffness(100.0);
+		ctrl_mode.parametrize(CartDOF.Z).setStiffness(70.0);
 		tool.attachTo(robot.getFlange());
 	}
 
