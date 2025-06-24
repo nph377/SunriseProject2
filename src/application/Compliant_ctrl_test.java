@@ -3,6 +3,7 @@ package application;
 
 import javax.inject.Inject;
 
+import com.kuka.common.ThreadUtil;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
@@ -64,10 +65,11 @@ public class Compliant_ctrl_test extends RoboticsAPIApplication {
 //		logger.info("moving back");
 //		robot.move(linRel(0,0,-dz,0,0,0).setCartVelocity(80).setMode(ctrl_mode));
 		
-		logger.info("moving in y direction");
-		double dy = 100.0;
-		robot.move(linRel(0,dy,0,0,0,0).setCartVelocity(80).setMode(ctrl_mode));
-		logger.info("moving back");
-		robot.move(linRel(0,-dy,0,0,0,0).setCartVelocity(80).setMode(ctrl_mode));
+//		double dy = 1.0;
+//		for (int i = 0; i<10; i++) {
+//			logger.info("loop");
+//			robot.move(linRel(0,dy,0,0,0,0).setCartVelocity(80).setMode(ctrl_mode));
+//			ThreadUtil.milliSleep(1000);
+//		}
 	}
 } 
