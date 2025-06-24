@@ -29,7 +29,7 @@ public class CopyOfMechanicalZeroPosition extends RoboticsAPIApplication {
         }
 
 		getLogger().info("Move to the mechanical zero position");
-		PTP ptpToMechanicalZeroPosition = ptp(1.5,0,0,0,0,0,0);
+		PTP ptpToMechanicalZeroPosition = ptp(1.51,0,0,0,0,0,0);
 		ptpToMechanicalZeroPosition.setJointVelocityRel(0.25);
 		lbr.move(ptpToMechanicalZeroPosition);
 	}
