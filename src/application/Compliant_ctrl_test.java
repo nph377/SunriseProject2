@@ -35,10 +35,11 @@ public class Compliant_ctrl_test extends RoboticsAPIApplication {
 	private LBR robot;
 	@Inject
 	private ITaskLogger logger;
+	@Inject
+	private Tool tool;
 
 	private CartesianImpedanceControlMode ctrl_mode;
 //	private ObjectFrame tool_frame;
-	private Tool tool;
 
 	@Override
 	public void initialize() {
