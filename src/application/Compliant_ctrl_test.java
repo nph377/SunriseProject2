@@ -60,9 +60,9 @@ public class Compliant_ctrl_test extends RoboticsAPIApplication {
 		
 		logger.info("moving in z direction");
 		double dz = 50.0;
-		robot.move(linRel(0,dz,0,0,0,0).setMode(ctrl_mode));
+		robot.move(linRel(0,0,dz,0,0,0).setMode(ctrl_mode));
 		logger.info("moving back");
-		robot.move(linRel(0,-dz,0,0,0,0).setMode(ctrl_mode));
+		robot.move(linRel(0,0,-dz,0,0,0).setMode(ctrl_mode));
 		
 //		logger.info("moving in y direction");
 //		double dy = 100.0;
