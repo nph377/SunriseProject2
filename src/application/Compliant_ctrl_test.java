@@ -32,9 +32,11 @@ import com.kuka.task.ITaskLogger;
 public class Compliant_ctrl_test extends RoboticsAPIApplication {
 	@Inject
 	private LBR robot;
+	@Inject
+	private ITaskLogger logger;
+
 	private CartesianImpedanceControlMode ctrl_mode;
 	private ObjectFrame tool_frame;
-	private ITaskLogger logger;
 
 	@Override
 	public void initialize() {
