@@ -7,7 +7,7 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 
 /**
- * Implementation of a robot application.
+ * Implementation of a robot application.+
  * <p>
  * The application provides a {@link RoboticsAPITask#initialize()} and a 
  * {@link RoboticsAPITask#run()} method, which will be called successively in 
