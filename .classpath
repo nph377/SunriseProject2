@@ -33,6 +33,16 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/SunriseProject2/KUKAJavaLib/com.kuka.roboticsAPI.handGuiding_1.17.0.5-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.statuscontroller_1.1.0.5.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/SunriseProject2/KUKAJavaLib/com.kuka.statuscontroller_1.1.0.5-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.statuscontroller.statusgroups_1.1.0.5.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/SunriseProject2/KUKAJavaLib/com.kuka.statuscontroller.statusgroups_1.1.0.5-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="KUKAJavaLib/com.kuka.sunrise.common_1.0.0.5.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/SunriseProject2/KUKAJavaLib/com.kuka.sunrise.common_1.0.0.5-javadoc.jar!/"/>
