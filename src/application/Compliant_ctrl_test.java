@@ -51,9 +51,12 @@ public class Compliant_ctrl_test extends RoboticsAPIApplication {
 	public void run() {
 		logger.info("run");
 		ObjectFrame tf = tool.getDefaultMotionFrame();
-		logger.info("tool frame: " + tf.toString());
+		logger.info(tf.toString());
 		
 		Frame f0 = robot.getCurrentCartesianPosition(tf);
 		logger.info("initial position: " + f0.toString());
+		
+		logger.info(robot.getCommandedCartesianPosition(tf).toString());
+		
 	}
 } 
