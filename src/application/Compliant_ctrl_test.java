@@ -39,30 +39,21 @@ public class Compliant_ctrl_test extends RoboticsAPIApplication {
 	private Tool tool;
 
 	private CartesianImpedanceControlMode ctrl_mode;
-//	private ObjectFrame tool_frame;
 
 	@Override
 	public void initialize() {
 		logger.info("init");
 		ctrl_mode = new  CartesianImpedanceControlMode();
-//		tool_frame = getApplicationData().getFrame("/practice_tool/practice_tool_frame");
 		tool.attachTo(robot.getFlange());
-		logger.info(tool.toString());
 	}
 
 	@Override
 	public void run() {
 		logger.info("run");
-		ObjectFrame tf = robot.getFlange();
-		logger.info(tf.toString());
-
-		ObjectFrame tf2 = tool.getDefaultMotionFrame();
-		logger.info(tf2.toString());
-
-		Frame f = robot.getCurrentCartesianPosition(tf);
-		logger.info(f.toString());
+		ObjectFrame tf = tool.getDefaultMotionFrame();
+		logger.info("tool frame: " + tf.toString());
 		
-		Frame f2 = robot.getCurrentCartesianPosition(tf2);
-		logger.info(f2.toString());
+		Frame f0 = robot.getCurrentCartesianPosition(tf);
+		logger.info("initial position: " + f0.toString());
 	}
 } 
