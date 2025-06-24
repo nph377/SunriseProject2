@@ -52,7 +52,9 @@ public class Compliant_ctrl_test extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 		logger.info("run");
-		Frame frame0 = robot.getCurrentCartesianPosition(tool.getFrame("/TCP"));
-		logger.info(frame0.toString());
+		Frame f =
+				robot.getCurrentCartesianPosition(tool.getFrame("/TCP"),
+				getApplicationData().getFrame("/Base"));
+		logger.info(f.toString());
 	}
 } 
