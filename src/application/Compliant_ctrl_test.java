@@ -2,9 +2,14 @@ package application;
 
 
 import javax.inject.Inject;
+
+import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
+import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+import com.kuka.task.ITaskLogger;
 
 /**
  * Implementation of a robot application.+
@@ -24,18 +29,23 @@ import com.kuka.roboticsAPI.deviceModel.LBR;
  * @see #run()
  * @see #dispose()
  */
-public class tool_test extends RoboticsAPIApplication {
+public class Compliant_ctrl_test extends RoboticsAPIApplication {
 	@Inject
-	private LBR lBR_iiwa_14_R820_1;
+	private LBR robot;
+	private CartesianImpedanceControlMode ctrl_mode;
+	private ObjectFrame tool_frame;
+	private ITaskLogger logger;
 
 	@Override
 	public void initialize() {
-		// initialize your application here
+		logger.info("init");
+		ctrl_mode = new  CartesianImpedanceControlMode();
+		tool_frame = getApplicationData().getFrame("/practice_tool/practice_tool_frame");
 	}
 
 	@Override
 	public void run() {
-		// your application execution starts here
-		lBR_iiwa_14_R820_1.move(ptpHome());
+		logger.info("run");
+//		Frame frame0 = robot.getCurrentCartesianPosition(tool_frame);
 	}
-}
+} 

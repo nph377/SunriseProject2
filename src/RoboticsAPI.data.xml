@@ -2,29 +2,12 @@
 <RoboticsAPIData version="3">
     <world>
         <gravitation x="0.0" y="0.0" z="9.81"/>
-        <frame id="_a5ee6158-853e-4b9c-a634-675d894774c4" name="P1">
-            <transformation a="8.647827210830822E-5" b="6.926884527707632E-5" c="5.771038782147496E-9" x="0.0032341125501007964" y="1.9728888935025565E-7" z="1331.9999995975952"/>
-            <additionalInformation>
-                <info key="LastModificationTime" type="java.lang.Long" value="1750787807931"/>
-                <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Flange" tool="Flange" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
-                    <tcpTransformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
-                </info>
-            </additionalInformation>
-            <redundancyData>
-                <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
-                    <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="3" valueType="java.lang.Integer"/>
-                    <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="15" valueType="java.lang.Integer"/>
-                    <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-1.5939001227681715E-5" valueType="java.lang.Double"/>
-                </redundancy>
-            </redundancyData>
-        </frame>
     </world>
     <objectTemplates>
         <toolTemplate class="" defaultMotionFrameRef="/practice_tool_frame" name="practice_tool">
             <frames>
                 <frame id="_bc0dc8d3-dec4-4b5e-b580-5df1120d2fa2" name="practice_tool_frame">
-                    <transformation a="0.0" b="0.0" c="0.0" x="-0.5637037544118303" y="-0.06044304756027911" z="105.03360994447489"/>
-                    <measurementTranslation calculationError="0.8532412150216448" method="XYZ4Point" timestamp="1750789602212"/>
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="105.0"/>
                 </frame>
             </frames>
             <additionalInformation>
