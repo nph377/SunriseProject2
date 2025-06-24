@@ -3,6 +3,7 @@ package application;
 
 import javax.inject.Inject;
 
+import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
@@ -44,6 +45,7 @@ public class Compliant_ctrl_test extends RoboticsAPIApplication {
 	public void initialize() {
 		logger.info("init");
 		ctrl_mode = new  CartesianImpedanceControlMode();
+		ctrl_mode.parametrize(CartDOF.Z).setStiffness(100.0);
 		tool.attachTo(robot.getFlange());
 	}
 
@@ -56,10 +58,16 @@ public class Compliant_ctrl_test extends RoboticsAPIApplication {
 		Frame f0 = robot.getCurrentCartesianPosition(tf);
 		logger.info("initial position: " + f0.toString());
 		
-		logger.info("moving in y direction");
-		double dy = 100.0;
-		robot.move(linRel(0,dy,0,0,0,0));
+		logger.info("moving in z direction");
+		double dz = 50.0;
+		robot.move(linRel(0,dz,0,0,0,0).setMode(ctrl_mode));
 		logger.info("moving back");
-		robot.move(linRel(0,-dy,0,0,0,0));
+		robot.move(linRel(0,-dz,0,0,0,0).setMode(ctrl_mode));
+		
+//		logger.info("moving in y direction");
+//		double dy = 100.0;
+//		robot.move(linRel(0,dy,0,0,0,0).setMode(ctrl_mode));
+//		logger.info("moving back");
+//		robot.move(linRel(0,-dy,0,0,0,0).setMode(ctrl_mode));
 	}
 } 
