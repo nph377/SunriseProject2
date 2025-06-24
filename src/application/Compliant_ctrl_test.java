@@ -56,7 +56,10 @@ public class Compliant_ctrl_test extends RoboticsAPIApplication {
 		Frame f0 = robot.getCurrentCartesianPosition(tf);
 		logger.info("initial position: " + f0.toString());
 		
-		logger.info(robot.getCommandedCartesianPosition(tf).toString());
-		
+		logger.info("moving in y direction");
+		double dy = 10.0;
+		robot.move(linRel(0,-dy,0,0,0,0));
+		logger.info("moving back");
+		robot.move(linRel(0,dy,0,0,0,0));
 	}
 } 
