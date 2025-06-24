@@ -4,6 +4,7 @@ package application;
 import javax.inject.Inject;
 
 import com.kuka.roboticsAPI.geometricModel.Frame;
+import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 import com.kuka.roboticsAPI.deviceModel.LBR;
@@ -36,18 +37,21 @@ public class Compliant_ctrl_test extends RoboticsAPIApplication {
 	private ITaskLogger logger;
 
 	private CartesianImpedanceControlMode ctrl_mode;
-	private ObjectFrame tool_frame;
+//	private ObjectFrame tool_frame;
+	private Tool tool;
 
 	@Override
 	public void initialize() {
 		logger.info("init");
 		ctrl_mode = new  CartesianImpedanceControlMode();
-		tool_frame = getApplicationData().getFrame("/practice_tool/practice_tool_frame");
+//		tool_frame = getApplicationData().getFrame("/practice_tool/practice_tool_frame");
+		tool.attachTo(robot.getFlange());
 	}
 
 	@Override
 	public void run() {
 		logger.info("run");
-//		Frame frame0 = robot.getCurrentCartesianPosition(tool_frame);
+		Frame frame0 = robot.getCurrentCartesianPosition(tool.getFrame("/TCP"));
+		logger.info(frame0.toString());
 	}
 } 
