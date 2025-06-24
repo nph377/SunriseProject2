@@ -47,6 +47,7 @@ public class Compliant_ctrl_test extends RoboticsAPIApplication {
 		ctrl_mode = new  CartesianImpedanceControlMode();
 //		tool_frame = getApplicationData().getFrame("/practice_tool/practice_tool_frame");
 		tool.attachTo(robot.getFlange());
+		logger.info(tool.toString());
 	}
 
 	@Override
