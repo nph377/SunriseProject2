@@ -56,7 +56,13 @@ public class Compliant_ctrl_test extends RoboticsAPIApplication {
 		ObjectFrame tf = robot.getFlange();
 		logger.info(tf.toString());
 
+		ObjectFrame tf2 = tool.getDefaultMotionFrame();
+		logger.info(tf2.toString());
+
 		Frame f = robot.getCurrentCartesianPosition(tf);
 		logger.info(f.toString());
+		
+		Frame f2 = robot.getCurrentCartesianPosition(tf2);
+		logger.info(f2.toString());
 	}
 } 
