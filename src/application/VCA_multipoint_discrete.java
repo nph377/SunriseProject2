@@ -45,8 +45,12 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 	@Override
 	public void initialize() {
-		// ask user to confirm xspan and yspan
 		logger.info("BEGIN");
+	}
+
+	@Override
+	public void run() {
+		// ask user to confirm xspan and yspan
 		logger.info("asking user to confirm xspan and yspan");
 		String prompt = "Are xspan and yspan correct?\n" +
 				"xspan = " + String.valueOf(x_span) + "mm\n" + 
@@ -66,11 +70,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		// ask user to move TCP to top left of sample and above max height of sample
 		// ask user to confirm ready to begin
 		// record z ceiling
-
-	}
-
-	@Override
-	public void run() {
+        
 		// loop through points
 			// move to x,y,z_ceil
 			// move down until touch surface
