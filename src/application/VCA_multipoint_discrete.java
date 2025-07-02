@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
 import com.kuka.task.ITaskLogger;
 
 /**
@@ -32,6 +33,7 @@ import com.kuka.task.ITaskLogger;
  * @see #run()
  * @see #dispose()
  */
+
 public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	@Inject
 	private LBR lBR_iiwa_14_R820_1;
@@ -43,13 +45,35 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 	@Override
 	public void initialize() {
-		// initialize your application here
 		logger.info("xspan = " + String.valueOf(x_span) + ", " + "yspan = " + String.valueOf(y_span));
+		// ask user to confirm xspan and yspan
+		getLogger().info("Are xspan and yspan correct?");
+        int isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "text", "Yes", "No");
+        if (isCancel == 1) {
+			logger.info("terminating program early");
+            return;
+        }
+		else {
+			logger.info("xspan and yspan confirmed");
+		}
+
+		// ask user if ready to make TCP vertical
+		// make TCP vertical
+
+		// ask user to move TCP to top left of sample and above max height of sample
+		// ask user to confirm ready to begin
+		// record z ceiling
+
 	}
 
 	@Override
 	public void run() {
-		// your application execution starts here
+		// loop through points
+			// move to x,y,z_ceil
+			// move down until touch surface
+			// (optional) record z data for future use (need to figure out a way to find same starting point for future runs)
+			// move back up to optimal distance for VCA
+			// wait for VCA to be done at this point
 		logger.info("done");
 	}
 	
