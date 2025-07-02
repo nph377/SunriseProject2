@@ -70,7 +70,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		prompt = "Are xspan and yspan correct?\n" +
 				"xspan = " + String.valueOf(x_span) + "mm\n" + 
 				"yspan = " + String.valueOf(y_span) + "mm";
-        response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
+        response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit");
         if (response == 1) {
 			logger.info("TERMINATING PROGRAM EARLY");
             return;
@@ -79,10 +79,10 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			logger.info("xspan and yspan confirmed");
 		}
 
-		// ask user to make TCP vertical
+		// ask user to confirm TCP orientation
         logger.info("asking user to make TCP vertical");
         prompt = "is TCP vertical?";
-    	response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
+    	response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit");
 		if (response == 1) {
 			logger.info("TERMINATING PROGRAM EARLY");
 			return;
@@ -92,11 +92,20 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		}
 
 		// TODO ask user to move TCP to top left of sample and above max height of sample
+        prompt = "Move the TCP to the top left of sample (minimum world x and y)\nand above maximum height of sample";
+        response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Done", "Exit");
+        if (response == 1) {
+			logger.info("TERMINATING PROGRAM EARLY");
+            return;
+        }
+		else {
+			logger.info("TCP starting location confirmed");
+		}
 
 		// ask user to confirm ready to begin
         logger.info("asking user to confirm ready to begin");
         prompt = "Ready to begin?";
-        response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
+        response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit");
         if (response == 1) {
 			logger.info("TERMINATING PROGRAM EARLY");
             return;
