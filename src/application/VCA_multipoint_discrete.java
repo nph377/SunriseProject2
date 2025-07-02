@@ -54,6 +54,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private CartesianImpedanceControlMode ctrl_mode;
 	private double x_span = 10; //mm
 	private double y_span = 10; //mm
+	private int response;
+	private String prompt;
 
 	@Override
 	public void initialize() {
@@ -70,10 +72,10 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 		// ask user to confirm xspan and yspan
 		logger.info("asking user to confirm xspan and yspan");
-		String prompt = "Are xspan and yspan correct?\n" +
+		prompt = "Are xspan and yspan correct?\n" +
 				"xspan = " + String.valueOf(x_span) + "mm\n" + 
 				"yspan = " + String.valueOf(y_span) + "mm";
-        int response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
+        response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
         if (response == 1) {
 			logger.info("TERMINATING PROGRAM EARLY");
             return;
@@ -85,8 +87,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		// ask user to make TCP vertical
         logger.info("asking user to make TCP vertical");
         prompt = "is TCP vertical?";
-        response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit", "Check");
         while (true){
+        	response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit", "Check");
 			if (response == 1) {
 				logger.info("TERMINATING PROGRAM EARLY");
 				return;
