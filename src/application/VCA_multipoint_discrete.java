@@ -44,11 +44,13 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	@Override
 	public void initialize() {
 		// initialize your application here
-		logger.info("xspan = " + String.valueOf(x_span) + "yspan = " + String.valueOf(y_span));
+		logger.info("xspan = " + String.valueOf(x_span) + ", " + "yspan = " + String.valueOf(y_span));
 	}
 
 	@Override
 	public void run() {
 		// your application execution starts here
+		logger.info("done");
 	}
+	
 }
