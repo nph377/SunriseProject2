@@ -9,11 +9,17 @@ topography as discrete points.
 package application;
 
 import javax.inject.Inject;
+
+import com.kuka.jogging.provider.api.common.CartesianVelocityData;
+import com.kuka.jogging.provider.api.motions.CartesianJoggingMotion;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Tool;
+import com.kuka.roboticsAPI.geometricModel.math.Transformation;
+import com.kuka.roboticsAPI.motionModel.CartesianJoggingMode;
+import com.kuka.roboticsAPI.motionModel.IMotion;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
 import com.kuka.task.ITaskLogger;
@@ -76,20 +82,17 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			logger.info("xspan and yspan confirmed");
 		}
 
-		// ask user if ready to make TCP vertical
-        logger.info("asking user to confirm xspan and yspan");
-        prompt = "Ready to make TCP vertical?";
+		// ask user to make TCP vertical
+        logger.info("asking user to make TCP vertical");
+        prompt = "is TCP vertical?";
         isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
         if (isCancel == 1) {
 			logger.info("TERMINATING PROGRAM EARLY");
             return;
         }
 		else {
-			logger.info("rotating TCP");
+			logger.info("TCP orientation confirmed");
 		}
-		// TODO make TCP vertical
-		// MARK
-		logger.info("TCP rotation complete");
 
 		// TODO ask user to move TCP to top left of sample and above max height of sample
 
