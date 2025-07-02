@@ -12,6 +12,7 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.ObjectFrame;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
 import com.kuka.task.ITaskLogger;
 
 /**
@@ -52,6 +53,13 @@ public class Compliant_ctrl_test extends RoboticsAPIApplication {
 
 	@Override
 	public void run() {
+		String prompt = "ready to begin?";
+        int isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
+        if (isCancel == 1) {
+			logger.info("TERMINATING PROGRAM EARLY");
+            return;
+        }
+
 		logger.info("run");
 		ObjectFrame tf = tool.getDefaultMotionFrame();
 		logger.info(tf.toString());
