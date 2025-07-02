@@ -73,8 +73,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		String prompt = "Are xspan and yspan correct?\n" +
 				"xspan = " + String.valueOf(x_span) + "mm\n" + 
 				"yspan = " + String.valueOf(y_span) + "mm";
-        int isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
-        if (isCancel == 1) {
+        int response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
+        if (response == 1) {
 			logger.info("TERMINATING PROGRAM EARLY");
             return;
         }
@@ -85,13 +85,19 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		// ask user to make TCP vertical
         logger.info("asking user to make TCP vertical");
         prompt = "is TCP vertical?";
-        isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
-        if (isCancel == 1) {
-			logger.info("TERMINATING PROGRAM EARLY");
-            return;
-        }
-		else {
-			logger.info("TCP orientation confirmed");
+        response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit", "Check");
+        while (true){
+			if (response == 1) {
+				logger.info("TERMINATING PROGRAM EARLY");
+				return;
+			}
+			else if (response == 2) {
+				logger.info("check");
+			}
+			else {
+				logger.info("TCP orientation confirmed");
+				break;
+			}
 		}
 
 		// TODO ask user to move TCP to top left of sample and above max height of sample
@@ -99,8 +105,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		// ask user to confirm ready to begin
         logger.info("asking user to confirm ready to begin");
         prompt = "Ready to begin?";
-        isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
-        if (isCancel == 1) {
+        response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
+        if (response == 1) {
 			logger.info("TERMINATING PROGRAM EARLY");
             return;
         }
