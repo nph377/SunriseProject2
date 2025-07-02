@@ -16,5 +16,16 @@
             </additionalInformation>
             <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="16.6" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.016"/>
         </toolTemplate>
+        <toolTemplate class="" name="voice_coil_tool">
+            <frames>
+                <frame id="_602139d2-38a9-4c9f-bebf-abb199849793" name="voice_coil_tool_frame">
+                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="120.0"/>
+                </frame>
+            </frames>
+            <additionalInformation>
+                <info key="ID" type="java.lang.String" value="788ee543-ea02-45a5-b169-484964c6bfd2"/>
+            </additionalInformation>
+            <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="0.0" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.3"/>
+        </toolTemplate>
     </objectTemplates>
 </RoboticsAPIData>
