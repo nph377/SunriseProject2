@@ -87,19 +87,13 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		// ask user to make TCP vertical
         logger.info("asking user to make TCP vertical");
         prompt = "is TCP vertical?";
-        while (true){
-        	response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit", "Check");
-			if (response == 1) {
-				logger.info("TERMINATING PROGRAM EARLY");
-				return;
-			}
-			else if (response == 2) {
-				logger.info("check");
-			}
-			else {
-				logger.info("TCP orientation confirmed");
-				break;
-			}
+    	response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
+		if (response == 1) {
+			logger.info("TERMINATING PROGRAM EARLY");
+			return;
+		}
+		else {
+			logger.info("TCP orientation confirmed");
 		}
 
 		// TODO ask user to move TCP to top left of sample and above max height of sample
