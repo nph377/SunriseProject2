@@ -45,10 +45,12 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 	@Override
 	public void initialize() {
-		logger.info("xspan = " + String.valueOf(x_span) + ", " + "yspan = " + String.valueOf(y_span));
 		// ask user to confirm xspan and yspan
-		getLogger().info("Are xspan and yspan correct?");
-        int isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "text", "Yes", "No");
+		logger.info("asking user to confirm xspan and yspan");
+		String prompt = "Are xspan and yxpan correct?\n" +
+				"xspan = " + String.valueOf(x_span) + ", " + 
+				"yspan = " + String.valueOf(y_span);
+        int isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
         if (isCancel == 1) {
 			logger.info("terminating program early");
             return;
