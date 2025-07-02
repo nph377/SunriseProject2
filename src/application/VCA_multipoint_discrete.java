@@ -46,13 +46,14 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	@Override
 	public void initialize() {
 		// ask user to confirm xspan and yspan
+		logger.info("BEGIN");
 		logger.info("asking user to confirm xspan and yspan");
-		String prompt = "Are xspan and yxpan correct?\n" +
-				"xspan = " + String.valueOf(x_span) + ", " + 
-				"yspan = " + String.valueOf(y_span);
+		String prompt = "Are xspan and yspan correct?\n" +
+				"xspan = " + String.valueOf(x_span) + "mm\n" + 
+				"yspan = " + String.valueOf(y_span) + "mm";
         int isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
         if (isCancel == 1) {
-			logger.info("terminating program early");
+			logger.info("TERMINATING PROGRAM EARLY");
             return;
         }
 		else {
@@ -76,7 +77,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			// (optional) record z data for future use (need to figure out a way to find same starting point for future runs)
 			// move back up to optimal distance for VCA
 			// wait for VCA to be done at this point
-		logger.info("done");
+		logger.info("END");
 	}
 	
 }
