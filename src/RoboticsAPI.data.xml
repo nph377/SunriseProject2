@@ -4,18 +4,6 @@
         <gravitation x="0.0" y="0.0" z="9.81"/>
     </world>
     <objectTemplates>
-        <toolTemplate class="" defaultMotionFrameRef="/practice_tool_frame" name="practice_tool">
-            <frames>
-                <frame id="_bc0dc8d3-dec4-4b5e-b580-5df1120d2fa2" name="practice_tool_frame">
-                    <transformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="105.0"/>
-                </frame>
-            </frames>
-            <additionalInformation>
-                <info key="ID" type="java.lang.String" value="236b41a8-c854-44fa-97aa-af4c1d367c36"/>
-                <info key="Comment" type="java.lang.String" value="green 3d printed dummy tool&#13;&#10;"/>
-            </additionalInformation>
-            <loadData cogA="0.0" cogB="0.0" cogC="0.0" cogX="0.0" cogY="0.0" cogZ="16.6" inertiaX="0.0" inertiaY="0.0" inertiaZ="0.0" mass="0.016"/>
-        </toolTemplate>
         <toolTemplate class="" name="voice_coil_tool">
             <frames>
                 <frame id="_602139d2-38a9-4c9f-bebf-abb199849793" name="voice_coil_tool_frame">
