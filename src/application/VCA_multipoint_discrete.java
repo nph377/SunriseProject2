@@ -10,16 +10,11 @@ package application;
 
 import javax.inject.Inject;
 
-import com.kuka.jogging.provider.api.common.CartesianVelocityData;
-import com.kuka.jogging.provider.api.motions.CartesianJoggingMotion;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Tool;
-import com.kuka.roboticsAPI.geometricModel.math.Transformation;
-import com.kuka.roboticsAPI.motionModel.CartesianJoggingMode;
-import com.kuka.roboticsAPI.motionModel.IMotion;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
 import com.kuka.task.ITaskLogger;
@@ -59,7 +54,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 	@Override
 	public void initialize() {
-		logger.info("INIT");
+		logger.info("=================================\nINIT");
 		ctrl_mode = new  CartesianImpedanceControlMode();
 		// TODO - update this
 		ctrl_mode.parametrize(CartDOF.Z).setStiffness(70.0);
