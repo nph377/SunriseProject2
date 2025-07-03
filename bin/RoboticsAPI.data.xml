@@ -2,6 +2,22 @@
 <RoboticsAPIData version="3">
     <world>
         <gravitation x="0.0" y="0.0" z="9.81"/>
+        <frame id="_52c92f95-6200-4f23-8e12-237b8919a46c" name="P1">
+            <transformation a="-0.04771321430226634" b="-0.00247658501997182" c="3.0719290195163054" x="-403.2243621827455" y="327.3412078452892" z="318.87907113693234"/>
+            <additionalInformation>
+                <info key="LastModificationTime" type="java.lang.Long" value="1751553554640"/>
+                <info base="LBR_iiwa_14_R820_1" controller="KUKA_Sunrise_Cabinet_1" device="LBR_iiwa_14_R820_1" tcpName="Flange" tool="Flange" type="com.kuka.roboticsAPI.deviceModel.TeachInformation">
+                    <tcpTransformation a="0.0" b="0.0" c="0.0" x="0.0" y="0.0" z="0.0"/>
+                </info>
+            </additionalInformation>
+            <redundancyData>
+                <redundancy transformationProviderName="KUKA_Sunrise_Cabinet_1/LBR_iiwa_14_R820_1" type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy">
+                    <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$StatusParameter" value="2" valueType="java.lang.Integer"/>
+                    <info type="com.kuka.roboticsAPI.deviceModel.StatusTurnRedundancy$TurnParameter" value="76" valueType="java.lang.Integer"/>
+                    <info type="com.kuka.roboticsAPI.deviceModel.LBRE1Redundancy$E1Parameter" value="-0.03736082111006508" valueType="java.lang.Double"/>
+                </redundancy>
+            </redundancyData>
+        </frame>
     </world>
     <objectTemplates>
         <toolTemplate class="" name="voice_coil_tool">
