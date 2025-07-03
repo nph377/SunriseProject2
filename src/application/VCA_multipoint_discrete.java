@@ -225,7 +225,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			"new point \n"
 		);
 
-		logger.info("wtf is happening");
+		// on the first iteration, the robot moves to original position
+		// at program start if this line isn't here - I have no clue why
 		robot.move(linRel(0,0,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
 		// move to next point x,y
