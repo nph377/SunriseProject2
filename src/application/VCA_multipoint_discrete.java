@@ -48,8 +48,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private Tool tool;
 	
 	// SET THESE
-	private double xspan = 0; //mm
-	private double yspan = 0; //mm
+	private double xspan = 1; //mm
+	private double yspan = 1; //mm
 	private double x_increment = 1; //mm
 	private double y_increment = 1; //mm
 
@@ -180,8 +180,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 				// TODO move to next point x,y
 				log = "testing point:\n" +
-					String.valueOf(x) + "\n" +
-					String.valueOf(y) + "\n";
+					"x = " + String.valueOf(x-x0) + "mm\n" +
+					"y = " + String.valueOf(y-y0) + "mm\n";
 				logger.info(log);
 
 				// TODO move down until touch surface
