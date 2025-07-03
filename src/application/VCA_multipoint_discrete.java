@@ -225,12 +225,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			"new point \n"
 		);
 
-		// move to z0
-		logger.info("moving back to z0");
-		f = robot.getCurrentCartesianPosition(robot.getFlange());
-		z = f.getZ();
-		dz = z0 - z;
-		robot.move(linRel(0,0,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+		logger.info("wtf is happening");
+		robot.move(linRel(0,0,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
 		// move to next point x,y
 		logger.info("moving to point");
