@@ -12,6 +12,8 @@ import javax.inject.Inject;
 
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
+
+import com.kuka.roboticsAPI.conditionModel.ForceCondition;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
@@ -52,6 +54,11 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private double yspan = 5; //mm
 	private double x_increment = 5; //mm
 	private double y_increment = 5; //mm
+
+	private ForceCondition contact = ForceCondition.createSpatialForceCondition(
+		robot.getFlange(), 
+		5.0 // Threshold in Newtons
+	);
 
 	// runtime data
 	private int response;
@@ -260,8 +267,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		// mark
 		// TODO move down until touch surface
 		logger.info("moving down to touch surface");
-		dz = -5;
-		robot.move(linRel(0,0,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+		dz = -20;
+		robot.move(linRel(0,0,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2).breakWhen(contact));
 
 		// TODO (optional) record z data for future use (need to figure out a way to find same starting point for future runs)
 
