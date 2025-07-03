@@ -48,15 +48,17 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private Tool tool;
 	
 	// SET THESE
-	private double xspan = 4; //mm
-	private double yspan = 4; //mm
+	private double xspan = 0; //mm
+	private double yspan = 0; //mm
 	private double x_increment = 1; //mm
 	private double y_increment = 1; //mm
 
+	// runtime data
 	private int response;
 	private String prompt;
 	private String log;
 
+	private Frame f;
 	private double x;
 	private double y;
 	private double z;
@@ -64,6 +66,14 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private double b;
 	private double c;
 
+	private double dx;
+	private double dy;
+	private double dz;
+	private double da;
+	private double db;
+	private double dc;
+
+	private Frame f0;
 	private double x0;
 	private double y0;
 	private double z0;
@@ -74,6 +84,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	@Override
 	public void initialize() {
 		logger.info("===================================");
+		logger.info("NEW RUN");
 		// ctrl_mode = new  CartesianImpedanceControlMode();
 		// ctrl_mode.parametrize(CartDOF.Z).setStiffness(70.0);
 		tool.attachTo(robot.getFlange());
@@ -97,7 +108,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		}
 
 		// ask user about TCP orientation
-		Frame f = robot.getCurrentCartesianPosition(robot.getFlange());
+		f = robot.getCurrentCartesianPosition(robot.getFlange());
 		x = f.getX();
 		y = f.getY();
 		z = f.getZ();
@@ -119,8 +130,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		}
 		else if (response == 1) {
 			logger.info("orienting TCP");
-			double db = b;
-			double dc;
+			db = b;
 			if (c > 0)
 				dc = -c + Math.PI;
 			else
@@ -139,7 +149,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
         response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Done", "Exit");
         if (response == 0) {
 			logger.info("TCP starting location confirmed");
-			Frame f0 = robot.getCurrentCartesianPosition(robot.getFlange());
+			f0 = robot.getCurrentCartesianPosition(robot.getFlange());
 			x0 = f.getX();
 			y0 = f.getY();
 			z0 = f.getZ();
@@ -173,7 +183,6 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		}
         
 		// loop through points
-		// mark
 		boolean y_up = true;
 		for (x = x0; x<=x0+xspan; x += x_increment) {
 			if (y_up) {
@@ -193,12 +202,18 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	}
 
 	public void test_point(){
+		log = "testing point: " +
+			"x = " + String.valueOf(x-x0) + ", " +
+			"y = " + String.valueOf(y-y0);
+
+		// mark
 		// TODO move to z_ceil
+		f = robot.getCurrentCartesianPosition(robot.getFlange());
+		z = f.getZ();
+		dz = 1;
+		robot.move(linRel(0,0,dz,0,0,0).setJointVelocityRel(.2));
 
 		// TODO move to next point x,y
-		log = "testing point:\n" +
-			"x = " + String.valueOf(x-x0) + "mm\n" +
-			"y = " + String.valueOf(y-y0) + "mm\n";
 		logger.info(log);
 
 		// TODO move down until touch surface
