@@ -138,9 +138,10 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			return;
 		}
 
-        prompt = "Move the TCP to the corner of sample - minimum world x,y (check the sticky note)\n" +
-			"and above maximum height of sample \n*** THIS IS VERY IMPORTANT TO AVOID COLLISIONS ***";
-        response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Done", "Exit");
+        prompt = "Is TCP at the corner of sample - minimum world x,y (check the sticky note)\n" +
+			"and above maximum height of sample? \n*** THIS IS VERY IMPORTANT TO AVOID COLLISIONS ***\n" + 
+			"this must be done before starting the program because of a bug I cannot figure out";
+        response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
         if (response == 0) {
 			logger.info("TCP starting location confirmed");
 			f0 = robot.getCurrentCartesianPosition(robot.getFlange());
