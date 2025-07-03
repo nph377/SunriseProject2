@@ -222,8 +222,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		f = robot.getCurrentCartesianPosition(robot.getFlange());
 		x = f.getX();
 		y = f.getY();
-		dx = x - xn;
-		dy = y - yn;
+		dx = xn - x;
+		dy = yn - y;
 		logger.info(
 			"before moving: \n" +
 			"     actual x = " + String.valueOf(x) + "\n" +
