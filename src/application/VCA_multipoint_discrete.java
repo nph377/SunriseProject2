@@ -233,8 +233,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			"    desired y = " + String.valueOf(yn) + "\n" + 
 			"calculated dy = " + String.valueOf(dy)
 		);
-		// robot.move(linRel(dx,dy,0,0,0,0).setJointVelocityRel(.2));
-		robot.move(linRel(5,0,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+		robot.move(linRel(dx,dy,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
 		f = robot.getCurrentCartesianPosition(robot.getFlange());
 		x = f.getX();
