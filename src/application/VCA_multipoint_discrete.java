@@ -256,8 +256,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 		// TODO move back up to optimal distance for VCA
 		logger.info("backing off for VCA");
-		f = robot.getCurrentCartesianPosition(robot.getFlange());
-		robot.move(linRel(0,0,VCA_backoff_distance,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2).breakWhen(contact));
+		robot.move(linRel(0,0,VCA_backoff_distance,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
 		// TODO wait for VCA to be done at this point
 		logger.info("waiting for VCA");
