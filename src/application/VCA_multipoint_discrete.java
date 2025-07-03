@@ -14,6 +14,7 @@ import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.geometricModel.CartDOF;
+import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
@@ -54,7 +55,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 	@Override
 	public void initialize() {
-		logger.info("=================================\nINIT");
+		logger.info("===================================");
 		ctrl_mode = new  CartesianImpedanceControlMode();
 		// TODO - update this
 		ctrl_mode.parametrize(CartDOF.Z).setStiffness(70.0);
@@ -63,55 +64,74 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 	@Override
 	public void run() {
-		logger.info("RUN");
-
 		// ask user to confirm xspan and yspan
 		logger.info("asking user to confirm xspan and yspan");
 		prompt = "Are xspan and yspan correct?\n" +
-				"xspan = " + String.valueOf(x_span) + "mm\n" + 
-				"yspan = " + String.valueOf(y_span) + "mm";
+			"xspan = " + String.valueOf(x_span) + "mm\n" + 
+			"yspan = " + String.valueOf(y_span) + "mm"
+		;
         response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit");
-        if (response == 1) {
-			logger.info("TERMINATING PROGRAM EARLY");
-            return;
+        if (response == 0) {
+			logger.info("xspan and yspan confirmed");
         }
 		else {
-			logger.info("xspan and yspan confirmed");
+			logger.info("TERMINATING PROGRAM EARLY");
+            return;
 		}
 
-		// ask user to confirm TCP orientation
-        logger.info("asking user to make TCP vertical");
-        prompt = "is TCP vertical?";
-    	response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit");
-		if (response == 1) {
+		// TODO ask user about TCP orientation
+		Frame f = robot.getCurrentCartesianPosition(tool.getDefaultMotionFrame());
+		double x = f.getX();
+		double y = f.getY();
+		double z = f.getZ();
+		double a = f.getAlphaRad();
+		double b = f.getBetaRad();
+		double c = f.getGammaRad();
+        logger.info("asking user to about TCP orientation");
+        prompt = "Would you like to orient the TCP vertical?\n" + 
+			"current position:\n" + 
+			"x = " + String.valueOf(x) + "\n" +
+			"y = " + String.valueOf(y) + "\n" +
+			"z = " + String.valueOf(z) + "\n" +
+			"a = " + String.valueOf(a) + "\n" +
+			"b = " + String.valueOf(b) + "\n" +
+			"c = " + String.valueOf(c)
+		;
+    	response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "No", "Yes", "Exit");
+		if (response == 0) {
+			logger.info("TCP orientation confirmed");
+		}
+		else if (response == 1) {
+			logger.info("orienting TCP");
+			Frame v = new Frame(x,y,z,a,b,c);
+			// mark
+		}
+		else {
 			logger.info("TERMINATING PROGRAM EARLY");
 			return;
 		}
-		else {
-			logger.info("TCP orientation confirmed");
-		}
 
-		// TODO ask user to move TCP to top left of sample and above max height of sample
+		// ask user to move TCP to top left of sample and above max height of sample
         prompt = "Move the TCP to the top left of sample (minimum world x and y)\nand above maximum height of sample";
         response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Done", "Exit");
-        if (response == 1) {
-			logger.info("TERMINATING PROGRAM EARLY");
-            return;
+        if (response == 0) {
+			logger.info("TCP starting location confirmed");
         }
 		else {
-			logger.info("TCP starting location confirmed");
+			logger.info("TERMINATING PROGRAM EARLY");
+            return;
 		}
 
 		// ask user to confirm ready to begin
         logger.info("asking user to confirm ready to begin");
         prompt = "Ready to begin?";
         response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit");
-        if (response == 1) {
-			logger.info("TERMINATING PROGRAM EARLY");
-            return;
+        if (response == 0) {
+			logger.info("beginning sweep");
         }
 		else {
-			logger.info("beginning sweep");
+			logger.info("TERMINATING PROGRAM EARLY");
+            return;
 		}
 		// TODO record z ceiling
         
