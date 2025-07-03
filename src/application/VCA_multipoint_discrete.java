@@ -203,8 +203,9 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	}
 
 	public void test_point(double xn, double yn){
-		log = "testing point: " +
-			"xn = " + String.valueOf(xn-x0) + ", " +
+		log = "--------------\n" + 
+			"testing point: " +
+			"xn = " + String.valueOf(xn-x0) + " , " +
 			"yn = " + String.valueOf(yn-y0);
 		logger.info(log);
 
@@ -222,10 +223,14 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		// TODO move to next point x,y
 		dx = x - xn;
 		dy = y - yn;
-		log = "dx,dy = " + String.valueOf(dx) + ',' + String.valueOf(dy);
+		log = "moving to next point\n";
 		logger.info(log);
+		robot.move(linRel(dx,dy,0,0,0,0).setJointVelocityRel(.2));
 
 		// TODO move down until touch surface
+		logger.info("moving down to touch surface");
+		dz = 5;
+		robot.move(linRel(0,0,dz,0,0,0).setJointVelocityRel(.2));
 
 		// TODO (optional) record z data for future use (need to figure out a way to find same starting point for future runs)
 
