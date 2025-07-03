@@ -53,6 +53,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	// SET THESE
 	private double xspan = 5; //mm
 	private double yspan = 5; //mm
+	private double zspan = 20; //mm
 	private double x_increment = 5; //mm
 	private double y_increment = 5; //mm
 
@@ -95,42 +96,34 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 		contact = ForceCondition.createSpatialForceCondition(
 			robot.getFlange(), 
-			15.0 // Threshold in Newtons
+			10.0 // Threshold in Newtons
 		);
 	}
 
 	@Override
 	public void run() {
-		// ask user to confirm xspan and yspan
-		prompt = "Are xspan and yspan correct?\n" +
+		prompt = "Are xspan, yspan, zspan correct?\n" +
 			"xspan = " + String.valueOf(xspan) + "mm\n" + 
-			"yspan = " + String.valueOf(yspan) + "mm"
-		;
-		logger.info(prompt);
+			"yspan = " + String.valueOf(yspan) + "mm\n" +
+			"zspan = " + String.valueOf(zspan) + "mm";
         response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit");
         if (response == 0) {
-			logger.info("xspan and yspan confirmed");
+			logger.info("x,y,z spans confirmed");
         }
 		else {
 			logger.info("TERMINATING PROGRAM EARLY");
             return;
 		}
 
-		// ask user about TCP orientation
-		f = robot.getCurrentCartesianPosition(robot.getFlange());
-		x = f.getX();
-		y = f.getY();
-		z = f.getZ();
-		a = f.getAlphaRad();
-		b = f.getBetaRad();
-		c = f.getGammaRad();
         prompt = "Would you like to orient the TCP vertical?";
-        logger.info(prompt);
     	response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "No", "Yes", "Exit");
 		if (response == 0) {
 			logger.info("TCP orientation confirmed");
 		}
 		else if (response == 1) {
+			f = robot.getCurrentCartesianPosition(robot.getFlange());
+			b = f.getBetaRad();
+			c = f.getGammaRad();
 			logger.info("orienting TCP");
 			db = b;
 			if (c > 0)
@@ -145,7 +138,6 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			return;
 		}
 
-		// ask user to move TCP to top left of sample and above max height of sample
         prompt = "Move the TCP to the corner of sample - minimum world x,y (check the sticky note)\n" +
 			"and above maximum height of sample \n*** THIS IS VERY IMPORTANT TO AVOID COLLISIONS ***";
         response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Done", "Exit");
@@ -173,7 +165,6 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
             return;
 		}
 
-		// ask user to confirm ready to begin
         prompt = "Ready to begin?";
         logger.info(prompt);
         response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit");
@@ -270,7 +261,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		// mark
 		// TODO move down until touch surface
 		logger.info("moving down to touch surface");
-		dz = -20;
+		dz = -zspan;
 		robot.move(linRel(0,0,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2).breakWhen(contact));
 		ForceSensorData forces = robot.getSensorForExternalForce().getSensorData();
 		logger.info("forces: " + forces.toString());
