@@ -48,8 +48,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private Tool tool;
 	
 	// SET THESE
-	private double xspan = 10; //mm
-	private double yspan = 10; //mm
+	private double xspan = 5; //mm
+	private double yspan = 5; //mm
 	private double x_increment = 5; //mm
 	private double y_increment = 5; //mm
 
@@ -192,7 +192,6 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			y_up = !y_up;
 		}
 
-
 		logger.info("moving back to start position");
 		f = robot.getCurrentCartesianPosition(robot.getFlange());
 		x = f.getX();
@@ -207,6 +206,12 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		da = a0 - a;
 		db = b0 - b;
 		dc = c0 - c;
+		//mark
+		logger.info(
+			"dx = " + String.valueOf(dx) + "\n" + 
+			"dy = " + String.valueOf(dy) + "\n" + 
+			"dz = " + String.valueOf(dz) + "\n"
+		);
 		robot.move(linRel(dx,dy,dz,da,db,dc).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
 		logger.info("END");
