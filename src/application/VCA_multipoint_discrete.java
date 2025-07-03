@@ -115,14 +115,14 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		a = f.getAlphaRad();
 		b = f.getBetaRad();
 		c = f.getGammaRad();
-        prompt = "Would you like to orient the TCP vertical?\n" + 
-			"current position:\n" + 
-			"x = " + String.valueOf(x) + " mm\n" +
-			"y = " + String.valueOf(y) + " mm\n" +
-			"z = " + String.valueOf(z) + " mm\n" +
-			"a = " + String.valueOf(a * 180/Math.PI) + " deg\n" +
-			"b = " + String.valueOf(b * 180/Math.PI) + " deg\n" +
-			"c = " + String.valueOf(c * 180/Math.PI) + " deg\n";
+        prompt = "Would you like to orient the TCP vertical?";
+			// "\ncurrent position:\n" + 
+			// "x = " + String.valueOf(x) + " mm\n" +
+			// "y = " + String.valueOf(y) + " mm\n" +
+			// "z = " + String.valueOf(z) + " mm\n" +
+			// "a = " + String.valueOf(a * 180/Math.PI) + " deg\n" +
+			// "b = " + String.valueOf(b * 180/Math.PI) + " deg\n" +
+			// "c = " + String.valueOf(c * 180/Math.PI) + " deg\n";
         logger.info(prompt);
     	response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "No", "Yes", "Exit");
 		if (response == 0) {
@@ -145,7 +145,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 		// ask user to move TCP to top left of sample and above max height of sample
         prompt = "Move the TCP to the corner of sample - minimum world x,y (check the sticky note)\n" +
-			"and above maximum height of sample (THIS IS VERY IMPORTANT TO AVOID COLLISIONS)";
+			"and above maximum height of sample \n*** THIS IS VERY IMPORTANT TO AVOID COLLISIONS ***";
         response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Done", "Exit");
         if (response == 0) {
 			logger.info("TCP starting location confirmed");
@@ -205,16 +205,17 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		log = "testing point: " +
 			"x = " + String.valueOf(x-x0) + ", " +
 			"y = " + String.valueOf(y-y0);
+		logger.info(log);
 
 		// mark
-		// TODO move to z_ceil
+		// TODO move to z0
+		logger.info("moving to z0");
 		f = robot.getCurrentCartesianPosition(robot.getFlange());
 		z = f.getZ();
-		dz = 1;
+		dz = z - z0;
 		robot.move(linRel(0,0,dz,0,0,0).setJointVelocityRel(.2));
 
 		// TODO move to next point x,y
-		logger.info(log);
 
 		// TODO move down until touch surface
 
@@ -223,6 +224,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		// TODO move back up to optimal distance for VCA
 
 		// TODO wait for VCA to be done at this point
+
 	}
 	
 }
