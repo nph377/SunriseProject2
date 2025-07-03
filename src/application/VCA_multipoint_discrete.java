@@ -106,7 +106,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			logger.info("orienting TCP");
 			// mark
 			double db = b;
-			double dc = 0;
+			double dc = .3;
 			robot.move(linRel(0,0,0,0,db,dc).setJointVelocityRel(.2));
 			logger.info("TCP orientation complete");
 		}
