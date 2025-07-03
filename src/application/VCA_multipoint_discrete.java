@@ -230,7 +230,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			"desired x = " + String.valueOf(xn) + "\n" +
 			"calculated dx" + String.valueOf(dx) + "\n" +
 			"actual y = " + String.valueOf(y) + "\n" +
-			"desired y = " + String.valueOf(yn) +
+			"desired y = " + String.valueOf(yn) + "\n" + 
 			"calculated dy" + String.valueOf(dy)
 		);
 		robot.move(linRel(dx,dy,0,0,0,0).setJointVelocityRel(.2));
