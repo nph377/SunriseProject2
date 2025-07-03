@@ -104,7 +104,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		}
 		else if (response == 1) {
 			logger.info("orienting TCP");
-			Frame v = new Frame(x,y,z,0,0,0);
+			Frame v = new Frame(x,y,z,a,0,c);
 			robot.getFlange().move(lin(v).setJointVelocityRel(.2));
 			logger.info("TCP orientation complete");
 		}
