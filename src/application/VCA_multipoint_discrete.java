@@ -115,13 +115,6 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		b = f.getBetaRad();
 		c = f.getGammaRad();
         prompt = "Would you like to orient the TCP vertical?";
-			// "\ncurrent position:\n" + 
-			// "x = " + String.valueOf(x) + " mm\n" +
-			// "y = " + String.valueOf(y) + " mm\n" +
-			// "z = " + String.valueOf(z) + " mm\n" +
-			// "a = " + String.valueOf(a * 180/Math.PI) + " deg\n" +
-			// "b = " + String.valueOf(b * 180/Math.PI) + " deg\n" +
-			// "c = " + String.valueOf(c * 180/Math.PI) + " deg\n";
         logger.info(prompt);
     	response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "No", "Yes", "Exit");
 		if (response == 0) {
@@ -152,9 +145,9 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			x0 = f.getX();
 			y0 = f.getY();
 			z0 = f.getZ();
-			a0 = f.getX();
-			b0 = f.getY();
-			c0 = f.getZ();
+			a0 = f.getAlphaRad();
+			b0 = f.getBetaRad();
+			c0 = f.getGammaRad();
 			logger.info(
 				"start position:\n" + 
 				"x0 = " + String.valueOf(x0) + " mm\n" +
@@ -199,6 +192,23 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			y_up = !y_up;
 		}
 
+
+		logger.info("moving back to start position");
+		f = robot.getCurrentCartesianPosition(robot.getFlange());
+		x = f.getX();
+		y = f.getY();
+		z = f.getY();
+		a = f.getAlphaRad();
+		b = f.getBetaRad();
+		c = f.getGammaRad();
+		dx = x0 - x;
+		dy = y0 - y;
+		dz = z0 - z;
+		da = a0 - a;
+		db = b0 - b;
+		dc = c0 - c;
+		robot.move(linRel(dx,dy,dz,da,db,dc).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+
 		logger.info("END");
 	}
 
@@ -216,8 +226,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		dz = z0 - z;
 		robot.move(linRel(0,0,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
-		// mark
-		// TODO move to next point x,y
+		// move to next point x,y
 		logger.info("moving to point");
 		f = robot.getCurrentCartesianPosition(robot.getFlange());
 		x = f.getX();
@@ -251,6 +260,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		// 	"  y error = " + String.valueOf(ey)
 		// );
 
+		// mark
 		// TODO move down until touch surface
 		logger.info("moving down to touch surface");
 		dz = -5;
