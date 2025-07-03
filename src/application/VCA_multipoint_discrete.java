@@ -207,13 +207,14 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		da = a0 - a;
 		db = b0 - b;
 		dc = c0 - c;
-		//mark
 		logger.info(
 			"dx = " + String.valueOf(dx) + "\n" + 
 			"dy = " + String.valueOf(dy) + "\n" + 
 			"dz = " + String.valueOf(dz) + "\n"
 		);
-		robot.move(linRel(dx,dy,dz,da,db,dc).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+		//mark
+		// robot.move(linRel(dx,dy,dz,da,db,dc).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+		robot.move(linRel(dx,dy,0,da,db,dc).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
 		logger.info("END");
 	}
@@ -236,6 +237,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			"dx = " + String.valueOf(dx) + "\n" +
 			"dy = " + String.valueOf(dy)
 		);
+		//mark
 		// robot.move(linRel(dx,dy,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 		robot.move(linRel(5,0,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
