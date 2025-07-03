@@ -48,8 +48,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private Tool tool;
 	
 	// SET THESE
-	private double xspan = 1; //mm
-	private double yspan = 1; //mm
+	private double xspan = 4; //mm
+	private double yspan = 4; //mm
 	private double x_increment = 1; //mm
 	private double y_increment = 1; //mm
 
@@ -174,27 +174,42 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
         
 		// loop through points
 		// mark
+		boolean y_up = true;
 		for (x = x0; x<=x0+xspan; x += x_increment) {
+			if (y_up) {
+				for (y = y0; y<=y0+yspan; y += y_increment) {
+					test_point();
+				}
+			}
+			else {
+				for (y = y0+yspan; y>=y0; y -= y_increment) {
+					test_point();
+				}
+			}
+
 			for (y = y0; y<=y0+yspan; y += y_increment) {
-				// TODO move to z_ceil
-
-				// TODO move to next point x,y
-				log = "testing point:\n" +
-					"x = " + String.valueOf(x-x0) + "mm\n" +
-					"y = " + String.valueOf(y-y0) + "mm\n";
-				logger.info(log);
-
-				// TODO move down until touch surface
-
-				// TODO (optional) record z data for future use (need to figure out a way to find same starting point for future runs)
-
-				// TODO move back up to optimal distance for VCA
-
-				// TODO wait for VCA to be done at this point
 			}
 		}
 
 		logger.info("END");
+	}
+
+	public void test_point(){
+		// TODO move to z_ceil
+
+		// TODO move to next point x,y
+		log = "testing point:\n" +
+			"x = " + String.valueOf(x-x0) + "mm\n" +
+			"y = " + String.valueOf(y-y0) + "mm\n";
+		logger.info(log);
+
+		// TODO move down until touch surface
+
+		// TODO (optional) record z data for future use (need to figure out a way to find same starting point for future runs)
+
+		// TODO move back up to optimal distance for VCA
+
+		// TODO wait for VCA to be done at this point
 	}
 	
 }
