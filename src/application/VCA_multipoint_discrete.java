@@ -55,14 +55,11 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private double x_increment = 5; //mm
 	private double y_increment = 5; //mm
 
-	private ForceCondition contact = ForceCondition.createSpatialForceCondition(
-		robot.getFlange(), 
-		5.0 // Threshold in Newtons
-	);
-
 	// runtime data
 	private int response;
 	private String prompt;
+
+	private ForceCondition contact;
 
 	private Frame f;
 	private double x;
@@ -94,6 +91,11 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		// ctrl_mode = new  CartesianImpedanceControlMode();
 		// ctrl_mode.parametrize(CartDOF.Z).setStiffness(70.0);
 		tool.attachTo(robot.getFlange());
+
+		contact = ForceCondition.createSpatialForceCondition(
+			robot.getFlange(), 
+			5.0 // Threshold in Newtons
+		);
 	}
 
 	@Override
