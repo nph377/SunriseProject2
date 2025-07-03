@@ -49,19 +49,21 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private ITaskLogger logger;
 	@Inject
 	private Tool tool;
-	
+
 	// SET THESE
-	private double xspan = 5; //mm
-	private double yspan = 5; //mm
-	private double zspan = 20; //mm
-	private double x_increment = 5; //mm
-	private double y_increment = 5; //mm
+	private double xspan = 5; // mm
+	private double yspan = 5; // mm
+	private double zspan = 20; // mm
+	private double x_increment = 5; // mm
+	private double y_increment = 5; // mm
+	private double contact_threshold = 5; // N
 
 	// runtime data
 	private int response;
 	private String prompt;
 
 	private ForceCondition contact;
+	private ForceSensorData forces;
 
 	private Frame f;
 	private double x;
@@ -96,7 +98,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 		contact = ForceCondition.createSpatialForceCondition(
 			robot.getFlange(), 
-			10.0 // Threshold in Newtons
+			contact_threshold // Threshold in Newtons
 		);
 	}
 
@@ -248,12 +250,12 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 		// TODO move down until touch surface
 		logger.info("moving down to touch surface");
+		forces = robot.getSensorForExternalForce().getSensorData();
+		logger.info("forces before contact: " + forces.toString());
 		dz = -zspan;
 		robot.move(linRel(0,0,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2).breakWhen(contact));
-		ForceSensorData forces = robot.getSensorForExternalForce().getSensorData();
-		logger.info("forces: " + forces.toString());
-
-		// TODO (optional) record z data for future use (need to figure out a way to find same starting point for future runs)
+		forces = robot.getSensorForExternalForce().getSensorData();
+		logger.info("forces after contact: " + forces.toString());
 
 		// TODO move back up to optimal distance for VCA
 
