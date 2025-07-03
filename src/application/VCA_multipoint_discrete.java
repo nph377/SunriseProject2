@@ -210,8 +210,6 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		logger.info(log);
 
 		f = robot.getCurrentCartesianPosition(robot.getFlange());
-		x = f.getX();
-		y = f.getY();
 		z = f.getZ();
 
 		// move to z0
@@ -221,9 +219,14 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 		// mark
 		// TODO move to next point x,y
+		f = robot.getCurrentCartesianPosition(robot.getFlange());
+		x = f.getX();
+		y = f.getY();
 		dx = x - xn;
 		dy = y - yn;
-		log = "moving to next point\n";
+		log = "moving to xn,yn \n" +
+			"dx = " + String.valueOf(dx) +
+			"dy = " + String.valueOf(dy);
 		logger.info(log);
 		robot.move(linRel(dx,dy,0,0,0,0).setJointVelocityRel(.2));
 
