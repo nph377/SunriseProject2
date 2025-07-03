@@ -79,7 +79,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
             return;
 		}
 
-		// mark
+		// startmark
 		// TODO ask user about TCP orientation
 		Frame f = robot.getCurrentCartesianPosition(robot.getFlange());
 		double x = f.getX();
@@ -104,8 +104,10 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		}
 		else if (response == 1) {
 			logger.info("orienting TCP");
-			Frame v = new Frame(x,y,z,a,90,c);
-			robot.getFlange().move(lin(v).setJointVelocityRel(.2));
+			// mark
+			double db = 1;
+			double dc = 0;
+			robot.move(linRel(0,0,0,0,db,dc));
 			logger.info("TCP orientation complete");
 		}
 		else {
