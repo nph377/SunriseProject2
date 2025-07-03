@@ -186,9 +186,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 					test_point();
 				}
 			}
-
-			for (y = y0; y<=y0+yspan; y += y_increment) {
-			}
+			y_up = !y_up;
 		}
 
 		logger.info("END");
