@@ -56,7 +56,6 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	// runtime data
 	private int response;
 	private String prompt;
-	private String log;
 
 	private Frame f;
 	private double x;
@@ -156,14 +155,15 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			a0 = f.getX();
 			b0 = f.getY();
 			c0 = f.getZ();
-			log = "start position:\n" + 
+			logger.info(
+				"start position:\n" + 
 				"x0 = " + String.valueOf(x0) + " mm\n" +
 				"y0 = " + String.valueOf(y0) + " mm\n" +
 				"z0 = " + String.valueOf(z0) + " mm\n" +
 				"a0 = " + String.valueOf(a0 * 180/Math.PI) + " deg\n" +
 				"b0 = " + String.valueOf(b0 * 180/Math.PI) + " deg\n" +
-				"c0 = " + String.valueOf(c0 * 180/Math.PI) + " deg\n";
-			logger.info(log);
+				"c0 = " + String.valueOf(c0 * 180/Math.PI) + " deg\n"
+			);
         }
 		else {
 			logger.info("TERMINATING PROGRAM EARLY");
@@ -188,25 +188,11 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		for (xn = x0; xn<=x0+xspan; xn += x_increment) {
 			if (y_up) {
 				for (yn = y0; yn<=y0+yspan; yn += y_increment) {
-					log = "--------------\n" + 
-						"new point: \n" +
-						"x0 = " + String.valueOf(x0) + "\n" +
-						"y0 = " + String.valueOf(y0) + "\n" +
-						"xn = " + String.valueOf(xn) + "\n" +
-						"yn = " + String.valueOf(yn);
-					logger.info(log);
 					test_point(xn, yn);
 				}
 			}
 			else {
 				for (yn = y0+yspan; yn>=y0; yn -= y_increment) {
-					log = "--------------\n" + 
-						"new point: \n" +
-						"x0 = " + String.valueOf(x0) + "\n" +
-						"y0 = " + String.valueOf(y0) + "\n" +
-						"xn = " + String.valueOf(xn) + "\n" +
-						"yn = " + String.valueOf(yn);
-					logger.info(log);
 					test_point(xn, yn);
 				}
 			}
@@ -217,13 +203,18 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	}
 
 	public void test_point(double xn, double yn){
-		f = robot.getCurrentCartesianPosition(robot.getFlange());
-		z = f.getZ();
+		logger.info(
+			"--------------\n" + 
+			"new point \n"
+		);
 
-		// move to z0
-		logger.info("moving back to z0");
-		dz = z - z0;
-		robot.move(linRel(0,0,dz,0,0,0).setJointVelocityRel(.2));
+
+		// // move to z0
+		// logger.info("moving back to z0");
+		// f = robot.getCurrentCartesianPosition(robot.getFlange());
+		// z = f.getZ();
+		// dz = z - z0;
+		// robot.move(linRel(0,0,dz,0,0,0).setJointVelocityRel(.2));
 
 		// mark
 		// TODO move to next point x,y
@@ -231,6 +222,13 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		f = robot.getCurrentCartesianPosition(robot.getFlange());
 		x = f.getX();
 		y = f.getY();
+		logger.info(
+			"before moving: \n" +
+			"actual x = " + String.valueOf(x) + "\n" +
+			"desired x = " + String.valueOf(xn) + "\n" +
+			"actual y = " + String.valueOf(y) + "\n" +
+			"desired y = " + String.valueOf(yn)
+		);
 		dx = x - xn;
 		dy = y - yn;
 		robot.move(linRel(dx,dy,0,0,0,0).setJointVelocityRel(.2));
@@ -240,14 +238,15 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		y = f.getY();
 		double ex = xn - x;
 		double ey = yn - y;
-		log =
-			"xn = " + String.valueOf(xn) + "\n" + 
-			"x = " + String.valueOf(x) + "\n" + 
+		logger.info(
+			"after moving: \n" + 
+			"actual x = " + String.valueOf(x) + "\n" + 
+			"desired x = " + String.valueOf(xn) + "\n" + 
 			"x error: " + String.valueOf(ex) + "\n" + 
-			"yn = " + String.valueOf(yn) + "\n" + 
-			"y = " + String.valueOf(y) + "\n" + 
-			"y error: " + String.valueOf(ey);
-		logger.info(log);
+			"actual y = " + String.valueOf(y) + "\n" + 
+			"desired y = " + String.valueOf(yn) + "\n" + 
+			"y error: " + String.valueOf(ey)
+		);
 
 		// // TODO move down until touch surface
 		// logger.info("moving down to touch surface");
