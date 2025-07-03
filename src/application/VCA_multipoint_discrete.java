@@ -236,7 +236,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			"dx = " + String.valueOf(dx) + "\n" +
 			"dy = " + String.valueOf(dy)
 		);
-		robot.move(linRel(dx,dy,0,0,0,0).setReferenceFrame(robot.getFlange()).setJointVelocityRel(.2));
+		// robot.move(linRel(dx,dy,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+		robot.move(linRel(5,0,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
 		// // TODO move down until touch surface
 		// logger.info("moving down to touch surface");
