@@ -48,8 +48,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private Tool tool;
 	
 	// SET THESE
-	private double xspan = 0; //mm
-	private double yspan = 0; //mm
+	private double xspan = 1; //mm
+	private double yspan = 1; //mm
 	private double x_increment = 1; //mm
 	private double y_increment = 1; //mm
 
@@ -184,15 +184,16 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
         
 		// loop through points
 		boolean y_up = true;
-		for (x = x0; x<=x0+xspan; x += x_increment) {
+		double xn, yn;
+		for (xn = x0; xn<=x0+xspan; xn += x_increment) {
 			if (y_up) {
-				for (y = y0; y<=y0+yspan; y += y_increment) {
-					test_point();
+				for (yn = y0; yn<=y0+yspan; yn += y_increment) {
+					test_point(xn, yn);
 				}
 			}
 			else {
-				for (y = y0+yspan; y>=y0; y -= y_increment) {
-					test_point();
+				for (yn = y0+yspan; yn>=y0; yn -= y_increment) {
+					test_point(xn, yn);
 				}
 			}
 			y_up = !y_up;
@@ -201,21 +202,28 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		logger.info("END");
 	}
 
-	public void test_point(){
+	public void test_point(double xn, double yn){
 		log = "testing point: " +
-			"x = " + String.valueOf(x-x0) + ", " +
-			"y = " + String.valueOf(y-y0);
+			"xn = " + String.valueOf(xn-x0) + ", " +
+			"yn = " + String.valueOf(yn-y0);
 		logger.info(log);
 
-		// mark
-		// TODO move to z0
-		logger.info("moving to z0");
 		f = robot.getCurrentCartesianPosition(robot.getFlange());
+		x = f.getZ();
+		y = f.getY();
 		z = f.getZ();
+
+		// move to z0
+		logger.info("moving to z0");
 		dz = z - z0;
 		robot.move(linRel(0,0,dz,0,0,0).setJointVelocityRel(.2));
 
+		// mark
 		// TODO move to next point x,y
+		dx = x - xn;
+		dy = y - yn;
+		log = "dx,dy = " + String.valueOf(dx) + ',' + String.valueOf(dy);
+		logger.info(log);
 
 		// TODO move down until touch surface
 
@@ -225,6 +233,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 		// TODO wait for VCA to be done at this point
 
+		logger.info("done with test point");
 	}
 	
 }
