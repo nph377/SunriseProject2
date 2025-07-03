@@ -213,8 +213,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			"dz = " + String.valueOf(dz) + "\n"
 		);
 		//mark
-		// robot.move(linRel(dx,dy,dz,da,db,dc).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
-		robot.move(linRel(dx,dy,0,da,db,dc).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+		robot.move(linRel(dx,dy,dz,da,db,dc).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+		// robot.move(linRel(dx,dy,0,da,db,dc).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
 		logger.info("END");
 	}
