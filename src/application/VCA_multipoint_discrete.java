@@ -110,7 +110,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			if (c > 0)
 				dc = -c + Math.PI;
 			else
-				dc = c + Math.PI;
+				dc = -c - Math.PI;
 			robot.move(linRel(0,0,0,0,db,dc).setJointVelocityRel(.2));
 			logger.info("TCP orientation complete");
 		}
