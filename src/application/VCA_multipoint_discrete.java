@@ -48,10 +48,10 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private Tool tool;
 	
 	// SET THESE
-	private double xspan = 1; //mm
-	private double yspan = 1; //mm
-	private double x_increment = 1; //mm
-	private double y_increment = 1; //mm
+	private double xspan = 10; //mm
+	private double yspan = 10; //mm
+	private double x_increment = 5; //mm
+	private double y_increment = 5; //mm
 
 	// runtime data
 	private int response;
