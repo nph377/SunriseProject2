@@ -226,12 +226,12 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		dy = y - yn;
 		logger.info(
 			"before moving: \n" +
-			"actual x = " + String.valueOf(x) + "\n" +
-			"desired x = " + String.valueOf(xn) + "\n" +
-			"calculated dx" + String.valueOf(dx) + "\n" +
-			"actual y = " + String.valueOf(y) + "\n" +
-			"desired y = " + String.valueOf(yn) + "\n" + 
-			"calculated dy" + String.valueOf(dy)
+			"     actual x = " + String.valueOf(x) + "\n" +
+			"    desired x = " + String.valueOf(xn) + "\n" +
+			"calculated dx = " + String.valueOf(dx) + "\n" +
+			"     actual y = " + String.valueOf(y) + "\n" +
+			"    desired y = " + String.valueOf(yn) + "\n" + 
+			"calculated dy = " + String.valueOf(dy)
 		);
 		robot.move(linRel(dx,dy,0,0,0,0).setJointVelocityRel(.2));
 
@@ -242,12 +242,12 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		double ey = yn - y;
 		logger.info(
 			"after moving: \n" + 
-			"actual x = " + String.valueOf(x) + "\n" + 
+			" actual x = " + String.valueOf(x) + "\n" + 
 			"desired x = " + String.valueOf(xn) + "\n" + 
-			"x error: " + String.valueOf(ex) + "\n" + 
-			"actual y = " + String.valueOf(y) + "\n" + 
+			"  x error = " + String.valueOf(ex) + "\n" + 
+			" actual y = " + String.valueOf(y) + "\n" + 
 			"desired y = " + String.valueOf(yn) + "\n" + 
-			"y error: " + String.valueOf(ey)
+			"  y error = " + String.valueOf(ey)
 		);
 
 		// // TODO move down until touch surface
