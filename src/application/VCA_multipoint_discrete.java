@@ -47,18 +47,31 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	@Inject
 	private Tool tool;
 	
-	private CartesianImpedanceControlMode ctrl_mode;
-	private double x_span = 10; //mm
-	private double y_span = 10; //mm
+	// SET THESE
+	private double xspan = 10; //mm
+	private double yspan = 10; //mm
+	private double x_increment = 1; //mm
+	private double y_increment = 1; //mm
+
 	private int response;
 	private String prompt;
+
+	private double x;
+	private double y;
+	private double z;
+	private double a;
+	private double b;
+	private double c;
+
+	private double x0;
+	private double y0;
+	private double z0;
 
 	@Override
 	public void initialize() {
 		logger.info("===================================");
-		ctrl_mode = new  CartesianImpedanceControlMode();
-		// TODO - update this
-		ctrl_mode.parametrize(CartDOF.Z).setStiffness(70.0);
+		// ctrl_mode = new  CartesianImpedanceControlMode();
+		// ctrl_mode.parametrize(CartDOF.Z).setStiffness(70.0);
 		tool.attachTo(robot.getFlange());
 	}
 
@@ -67,8 +80,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		// ask user to confirm xspan and yspan
 		logger.info("asking user to confirm xspan and yspan");
 		prompt = "Are xspan and yspan correct?\n" +
-			"xspan = " + String.valueOf(x_span) + "mm\n" + 
-			"yspan = " + String.valueOf(y_span) + "mm"
+			"xspan = " + String.valueOf(xspan) + "mm\n" + 
+			"yspan = " + String.valueOf(yspan) + "mm"
 		;
         response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit");
         if (response == 0) {
@@ -79,15 +92,14 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
             return;
 		}
 
-		// startmark
-		// TODO ask user about TCP orientation
+		// ask user about TCP orientation
 		Frame f = robot.getCurrentCartesianPosition(robot.getFlange());
-		double x = f.getX();
-		double y = f.getY();
-		double z = f.getZ();
-		double a = f.getAlphaRad();
-		double b = f.getBetaRad();
-		double c = f.getGammaRad();
+		x = f.getX();
+		y = f.getY();
+		z = f.getZ();
+		a = f.getAlphaRad();
+		b = f.getBetaRad();
+		c = f.getGammaRad();
         prompt = "Would you like to orient the TCP vertical?\n" + 
 			"current position:\n" + 
 			"x = " + String.valueOf(x) + " mm\n" +
@@ -104,7 +116,6 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		}
 		else if (response == 1) {
 			logger.info("orienting TCP");
-			// mark
 			double db = b;
 			double dc;
 			if (c > 0)
@@ -118,13 +129,17 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			logger.info("TERMINATING PROGRAM EARLY");
 			return;
 		}
-		// endmark
 
 		// ask user to move TCP to top left of sample and above max height of sample
-        prompt = "Move the TCP to the top left of sample (minimum world x and y)\nand above maximum height of sample";
+        prompt = "Move the TCP to the corner of sample - minimum world x,y (check the sticky note)\n" +
+			"and above maximum height of sample (THIS IS VERY IMPORTANT TO AVOID COLLISIONS)";
         response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Done", "Exit");
         if (response == 0) {
 			logger.info("TCP starting location confirmed");
+			Frame f0 = robot.getCurrentCartesianPosition(robot.getFlange());
+			x0 = f.getX();
+			y0 = f.getY();
+			z0 = f.getZ();
         }
 		else {
 			logger.info("TERMINATING PROGRAM EARLY");
@@ -142,10 +157,14 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			logger.info("TERMINATING PROGRAM EARLY");
             return;
 		}
-		// TODO record z ceiling
         
 		// TODO loop through points
-			// move to x,y,z_ceil
+		// mark
+		for (x = x0; x<=x0+xspan; x += x_increment) {
+			logger.info(String.valueOf(x));
+		}
+			// move to z_ceil
+			// move to next point x,y
 			// move down until touch surface
 			// (optional) record z data for future use (need to figure out a way to find same starting point for future runs)
 			// move back up to optimal distance for VCA
