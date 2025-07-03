@@ -51,12 +51,12 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private Tool tool;
 
 	// SET THESE
-	private double xspan = 5; // mm
-	private double yspan = 5; // mm
-	private double zspan = 20; // mm
+	private double xspan = 15; // mm
+	private double yspan = 90; // mm
+	private double zspan = 25; // mm
 	private double x_increment = 5; // mm
 	private double y_increment = 5; // mm
-	private double contact_threshold = 5; // N
+	private double contact_threshold = 4; // N
 
 	// runtime data
 	private int response;
