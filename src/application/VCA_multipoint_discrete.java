@@ -55,6 +55,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 	private int response;
 	private String prompt;
+	private String log;
 
 	private double x;
 	private double y;
@@ -66,6 +67,9 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private double x0;
 	private double y0;
 	private double z0;
+	private double a0;
+	private double b0;
+	private double c0;
 
 	@Override
 	public void initialize() {
@@ -78,11 +82,11 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	@Override
 	public void run() {
 		// ask user to confirm xspan and yspan
-		logger.info("asking user to confirm xspan and yspan");
 		prompt = "Are xspan and yspan correct?\n" +
 			"xspan = " + String.valueOf(xspan) + "mm\n" + 
 			"yspan = " + String.valueOf(yspan) + "mm"
 		;
+		logger.info(prompt);
         response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit");
         if (response == 0) {
 			logger.info("xspan and yspan confirmed");
@@ -107,8 +111,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			"z = " + String.valueOf(z) + " mm\n" +
 			"a = " + String.valueOf(a * 180/Math.PI) + " deg\n" +
 			"b = " + String.valueOf(b * 180/Math.PI) + " deg\n" +
-			"c = " + String.valueOf(c * 180/Math.PI) + " deg\n"
-		;
+			"c = " + String.valueOf(c * 180/Math.PI) + " deg\n";
         logger.info(prompt);
     	response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "No", "Yes", "Exit");
 		if (response == 0) {
@@ -140,6 +143,17 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			x0 = f.getX();
 			y0 = f.getY();
 			z0 = f.getZ();
+			a0 = f.getX();
+			b0 = f.getY();
+			c0 = f.getZ();
+			log = "start position:\n" + 
+				"x0 = " + String.valueOf(x0) + " mm\n" +
+				"y0 = " + String.valueOf(y0) + " mm\n" +
+				"z0 = " + String.valueOf(z0) + " mm\n" +
+				"a0 = " + String.valueOf(a0 * 180/Math.PI) + " deg\n" +
+				"b0 = " + String.valueOf(b0 * 180/Math.PI) + " deg\n" +
+				"c0 = " + String.valueOf(c0 * 180/Math.PI) + " deg\n";
+			logger.info(log);
         }
 		else {
 			logger.info("TERMINATING PROGRAM EARLY");
@@ -147,8 +161,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		}
 
 		// ask user to confirm ready to begin
-        logger.info("asking user to confirm ready to begin");
         prompt = "Ready to begin?";
+        logger.info(prompt);
         response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "Exit");
         if (response == 0) {
 			logger.info("beginning sweep");
@@ -158,17 +172,27 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
             return;
 		}
         
-		// TODO loop through points
+		// loop through points
 		// mark
 		for (x = x0; x<=x0+xspan; x += x_increment) {
-			logger.info(String.valueOf(x));
+			for (y = y0; y<=y0+yspan; y += y_increment) {
+				// TODO move to z_ceil
+
+				// TODO move to next point x,y
+				log = "testing point:\n" +
+					String.valueOf(x) + "\n" +
+					String.valueOf(y) + "\n";
+				logger.info(log);
+
+				// TODO move down until touch surface
+
+				// TODO (optional) record z data for future use (need to figure out a way to find same starting point for future runs)
+
+				// TODO move back up to optimal distance for VCA
+
+				// TODO wait for VCA to be done at this point
+			}
 		}
-			// move to z_ceil
-			// move to next point x,y
-			// move down until touch surface
-			// (optional) record z data for future use (need to figure out a way to find same starting point for future runs)
-			// move back up to optimal distance for VCA
-			// wait for VCA to be done at this point
 
 		logger.info("END");
 	}
