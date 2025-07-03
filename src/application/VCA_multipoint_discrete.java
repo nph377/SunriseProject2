@@ -19,6 +19,7 @@ import com.kuka.roboticsAPI.geometricModel.CartDOF;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+import com.kuka.roboticsAPI.sensorModel.ForceSensorData;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
 import com.kuka.task.ITaskLogger;
 
@@ -271,6 +272,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		logger.info("moving down to touch surface");
 		dz = -20;
 		robot.move(linRel(0,0,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2).breakWhen(contact));
+		ForceSensorData forces = robot.getSensorForExternalForce().getSensorData();
+		logger.info("forces: " + forces.toString());
 
 		// TODO (optional) record z data for future use (need to figure out a way to find same starting point for future runs)
 
