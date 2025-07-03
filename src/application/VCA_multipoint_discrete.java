@@ -79,6 +79,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
             return;
 		}
 
+		// mark
 		// TODO ask user about TCP orientation
 		Frame f = robot.getCurrentCartesianPosition(robot.getFlange());
 		double x = f.getX();
@@ -102,16 +103,16 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			logger.info("TCP orientation confirmed");
 		}
 		else if (response == 1) {
-			// mark
 			logger.info("orienting TCP");
 			Frame v = new Frame(x,y,z,a,0,180);
-			robot.move(lin(v).setJointVelocityRel(.2));
+			robot.getFlange().move(lin(v).setJointVelocityRel(.2));
 			logger.info("TCP orientation complete");
 		}
 		else {
 			logger.info("TERMINATING PROGRAM EARLY");
 			return;
 		}
+		// endmark
 
 		// ask user to move TCP to top left of sample and above max height of sample
         prompt = "Move the TCP to the top left of sample (minimum world x and y)\nand above maximum height of sample";
