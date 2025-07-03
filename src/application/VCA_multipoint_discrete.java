@@ -209,12 +209,12 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		);
 
 
-		// // move to z0
-		// logger.info("moving back to z0");
-		// f = robot.getCurrentCartesianPosition(robot.getFlange());
-		// z = f.getZ();
-		// dz = z - z0;
-		// robot.move(linRel(0,0,dz,0,0,0).setJointVelocityRel(.2));
+		// move to z0
+		logger.info("moving back to z0");
+		f = robot.getCurrentCartesianPosition(robot.getFlange());
+		z = f.getZ();
+		dz = z0 - z;
+		robot.move(linRel(0,0,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
 		// mark
 		// TODO move to next point x,y
@@ -224,36 +224,37 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		y = f.getY();
 		dx = xn - x;
 		dy = yn - y;
-		logger.info(
-			"before moving: \n" +
-			"     actual x = " + String.valueOf(x) + "\n" +
-			"    desired x = " + String.valueOf(xn) + "\n" +
-			"calculated dx = " + String.valueOf(dx) + "\n" +
-			"     actual y = " + String.valueOf(y) + "\n" +
-			"    desired y = " + String.valueOf(yn) + "\n" + 
-			"calculated dy = " + String.valueOf(dy)
-		);
+		// logger.info(
+		// 	"before moving: \n" +
+		// 	"     actual x = " + String.valueOf(x) + "\n" +
+		// 	"    desired x = " + String.valueOf(xn) + "\n" +
+		// 	"calculated dx = " + String.valueOf(dx) + "\n" +
+		// 	"     actual y = " + String.valueOf(y) + "\n" +
+		// 	"    desired y = " + String.valueOf(yn) + "\n" + 
+		// 	"calculated dy = " + String.valueOf(dy)
+		// );
 		robot.move(linRel(dx,dy,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
-		f = robot.getCurrentCartesianPosition(robot.getFlange());
-		x = f.getX();
-		y = f.getY();
-		double ex = xn - x;
-		double ey = yn - y;
-		logger.info(
-			"after moving: \n" + 
-			" actual x = " + String.valueOf(x) + "\n" + 
-			"desired x = " + String.valueOf(xn) + "\n" + 
-			"  x error = " + String.valueOf(ex) + "\n" + 
-			" actual y = " + String.valueOf(y) + "\n" + 
-			"desired y = " + String.valueOf(yn) + "\n" + 
-			"  y error = " + String.valueOf(ey)
-		);
+		// // check movement
+		// f = robot.getCurrentCartesianPosition(robot.getFlange());
+		// x = f.getX();
+		// y = f.getY();
+		// double ex = xn - x;
+		// double ey = yn - y;
+		// logger.info(
+		// 	"after moving: \n" + 
+		// 	" actual x = " + String.valueOf(x) + "\n" + 
+		// 	"desired x = " + String.valueOf(xn) + "\n" + 
+		// 	"  x error = " + String.valueOf(ex) + "\n" + 
+		// 	" actual y = " + String.valueOf(y) + "\n" + 
+		// 	"desired y = " + String.valueOf(yn) + "\n" + 
+		// 	"  y error = " + String.valueOf(ey)
+		// );
 
-		// // TODO move down until touch surface
-		// logger.info("moving down to touch surface");
-		// dz = 5;
-		// robot.move(linRel(0,0,dz,0,0,0).setJointVelocityRel(.2));
+		// TODO move down until touch surface
+		logger.info("moving down to touch surface");
+		dz = -5;
+		robot.move(linRel(0,0,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
 		// TODO (optional) record z data for future use (need to figure out a way to find same starting point for future runs)
 
