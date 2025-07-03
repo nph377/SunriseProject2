@@ -54,6 +54,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private double xspan = 15; // mm
 	private double yspan = 90; // mm
 	private double zspan = 25; // mm
+	private double VCA_backoff_distance = 10;
 	private double x_increment = 5; // mm
 	private double y_increment = 5; // mm
 	private double contact_threshold = 4; // N
@@ -215,9 +216,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			"dy = " + String.valueOf(dy) + "\n" + 
 			"dz = " + String.valueOf(dz) + "\n"
 		);
-		//mark
 		robot.move(linRel(dx,dy,dz,da,db,dc).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
-		// robot.move(linRel(dx,dy,0,da,db,dc).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
 		logger.info("END");
 	}
@@ -244,11 +243,9 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			"dx = " + String.valueOf(dx) + "\n" +
 			"dy = " + String.valueOf(dy)
 		);
-		//mark
 		robot.move(linRel(dx,dy,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
-		// robot.move(linRel(5,0,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
-		// TODO move down until touch surface
+		// move down until touch surface
 		logger.info("moving down to touch surface");
 		forces = robot.getSensorForExternalForce().getSensorData();
 		logger.info("forces before contact: " + forces.toString());
@@ -258,8 +255,12 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		logger.info("forces after contact: " + forces.toString());
 
 		// TODO move back up to optimal distance for VCA
+		logger.info("backing off for VCA");
+		f = robot.getCurrentCartesianPosition(robot.getFlange());
+		robot.move(linRel(0,0,VCA_backoff_distance,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2).breakWhen(contact));
 
 		// TODO wait for VCA to be done at this point
+		logger.info("waiting for VCA");
 
 		// move to z0
 		logger.info("moving back to z0");
