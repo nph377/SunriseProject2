@@ -48,8 +48,8 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	private Tool tool;
 	
 	// SET THESE
-	private double xspan = 10; //mm
-	private double yspan = 10; //mm
+	private double xspan = 0; //mm
+	private double yspan = 0; //mm
 	private double x_increment = 1; //mm
 	private double y_increment = 1; //mm
 
@@ -105,9 +105,9 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			"x = " + String.valueOf(x) + " mm\n" +
 			"y = " + String.valueOf(y) + " mm\n" +
 			"z = " + String.valueOf(z) + " mm\n" +
-			"a = " + String.valueOf(a) + " rad\n" +
-			"b = " + String.valueOf(b) + " rad\n" +
-			"c = " + String.valueOf(c) + " rad\n"
+			"a = " + String.valueOf(a * 180/Math.PI) + " deg\n" +
+			"b = " + String.valueOf(b * 180/Math.PI) + " deg\n" +
+			"c = " + String.valueOf(c * 180/Math.PI) + " deg\n"
 		;
         logger.info(prompt);
     	response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "No", "Yes", "Exit");
