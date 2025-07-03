@@ -189,9 +189,9 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			if (y_up) {
 				for (yn = y0; yn<=y0+yspan; yn += y_increment) {
 					log = "--------------\n" + 
+						"new point: \n" +
 						"x0 = " + String.valueOf(x0) + "\n" +
 						"y0 = " + String.valueOf(y0) + "\n" +
-						"new point: " +
 						"xn = " + String.valueOf(xn) + "\n" +
 						"yn = " + String.valueOf(yn);
 					logger.info(log);
@@ -201,9 +201,9 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			else {
 				for (yn = y0+yspan; yn>=y0; yn -= y_increment) {
 					log = "--------------\n" + 
+						"new point: \n" +
 						"x0 = " + String.valueOf(x0) + "\n" +
 						"y0 = " + String.valueOf(y0) + "\n" +
-						"new point: " +
 						"xn = " + String.valueOf(xn) + "\n" +
 						"yn = " + String.valueOf(yn);
 					logger.info(log);
@@ -240,8 +240,13 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		y = f.getY();
 		double ex = xn - x;
 		double ey = yn - y;
-		log = "x error: " + String.valueOf(ex) + "\n"
-			+ "y error: " + String.valueOf(ey);
+		log =
+			"xn = " + String.valueOf(xn) + "\n" + 
+			"x = " + String.valueOf(x) + "\n" + 
+			"x error: " + String.valueOf(ex) + "\n" + 
+			"yn = " + String.valueOf(yn) + "\n" + 
+			"y = " + String.valueOf(y) + "\n" + 
+			"y error: " + String.valueOf(ey);
 		logger.info(log);
 
 		// // TODO move down until touch surface
