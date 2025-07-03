@@ -188,12 +188,22 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		for (xn = x0; xn<=x0+xspan; xn += x_increment) {
 			if (y_up) {
 				for (yn = y0; yn<=y0+yspan; yn += y_increment) {
-					test_point(xn, yn);
+					log = "--------------\n" + 
+						"testing point: " +
+						"xn = " + String.valueOf(xn) + "\n" +
+						"yn = " + String.valueOf(yn);
+					logger.info(log);
+					// test_point(xn, yn);
 				}
 			}
 			else {
 				for (yn = y0+yspan; yn>=y0; yn -= y_increment) {
-					test_point(xn, yn);
+					log = "--------------\n" + 
+						"testing point: " +
+						"xn = " + String.valueOf(xn) + "\n" +
+						"yn = " + String.valueOf(yn);
+					logger.info(log);
+					// test_point(xn, yn);
 				}
 			}
 			y_up = !y_up;
@@ -203,12 +213,6 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 	}
 
 	public void test_point(double xn, double yn){
-		log = "--------------\n" + 
-			"testing point: " +
-			"xn = " + String.valueOf(xn-x0) + " , " +
-			"yn = " + String.valueOf(yn-y0);
-		logger.info(log);
-
 		f = robot.getCurrentCartesianPosition(robot.getFlange());
 		z = f.getZ();
 
