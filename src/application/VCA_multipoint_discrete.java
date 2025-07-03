@@ -84,9 +84,9 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		double x = f.getX();
 		double y = f.getY();
 		double z = f.getZ();
-		double a = f.getAlphaRad();
-		double b = f.getBetaRad();
-		double c = f.getGammaRad();
+		double a = f.getAlphaRad()*180/Math.PI;
+		double b = f.getBetaRad()*180/Math.PI;
+		double c = f.getGammaRad()*180/Math.PI;
         logger.info("asking user to about TCP orientation");
         prompt = "Would you like to orient the TCP vertical?\n" + 
 			"current position:\n" + 
@@ -102,9 +102,11 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			logger.info("TCP orientation confirmed");
 		}
 		else if (response == 1) {
-			logger.info("orienting TCP");
-			Frame v = new Frame(x,y,z,a,b,c);
 			// mark
+			logger.info("orienting TCP");
+			Frame v = new Frame(x,y,z,a,0,180);
+			robot.move(lin(v).setJointVelocityRel(.2));
+			logger.info("TCP orientation complete");
 		}
 		else {
 			logger.info("TERMINATING PROGRAM EARLY");
