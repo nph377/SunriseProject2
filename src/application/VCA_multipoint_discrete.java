@@ -193,7 +193,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 						"xn = " + String.valueOf(xn) + "\n" +
 						"yn = " + String.valueOf(yn);
 					logger.info(log);
-					// test_point(xn, yn);
+					test_point(xn, yn);
 				}
 			}
 			else {
@@ -203,7 +203,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 						"xn = " + String.valueOf(xn) + "\n" +
 						"yn = " + String.valueOf(yn);
 					logger.info(log);
-					// test_point(xn, yn);
+					test_point(xn, yn);
 				}
 			}
 			y_up = !y_up;
@@ -232,12 +232,12 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			"dx = " + String.valueOf(dx) + "\n" +
 			"dy = " + String.valueOf(dy);
 		logger.info(log);
-		robot.move(linRel(dx,dy,0,0,0,0).setJointVelocityRel(.2));
+		// robot.move(linRel(dx,dy,0,0,0,0).setJointVelocityRel(.2));
 
-		// TODO move down until touch surface
-		logger.info("moving down to touch surface");
-		dz = 5;
-		robot.move(linRel(0,0,dz,0,0,0).setJointVelocityRel(.2));
+		// // TODO move down until touch surface
+		// logger.info("moving down to touch surface");
+		// dz = 5;
+		// robot.move(linRel(0,0,dz,0,0,0).setJointVelocityRel(.2));
 
 		// TODO (optional) record z data for future use (need to figure out a way to find same starting point for future runs)
 
