@@ -238,15 +238,15 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			"dy = " + String.valueOf(dy)
 		);
 		//mark
-		// robot.move(linRel(dx,dy,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
-		robot.move(linRel(5,0,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+		robot.move(linRel(dx,dy,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+		// robot.move(linRel(5,0,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
-		// // TODO move down until touch surface
-		// logger.info("moving down to touch surface");
-		// dz = -zspan;
-		// robot.move(linRel(0,0,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2).breakWhen(contact));
-		// ForceSensorData forces = robot.getSensorForExternalForce().getSensorData();
-		// logger.info("forces: " + forces.toString());
+		// TODO move down until touch surface
+		logger.info("moving down to touch surface");
+		dz = -zspan;
+		robot.move(linRel(0,0,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2).breakWhen(contact));
+		ForceSensorData forces = robot.getSensorForExternalForce().getSensorData();
+		logger.info("forces: " + forces.toString());
 
 		// TODO (optional) record z data for future use (need to figure out a way to find same starting point for future runs)
 
@@ -254,12 +254,12 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 		// TODO wait for VCA to be done at this point
 
-		// // move to z0
-		// logger.info("moving back to z0");
-		// f = robot.getCurrentCartesianPosition(robot.getFlange());
-		// z = f.getZ();
-		// dz = z0 - z;
-		// robot.move(linRel(0,0,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+		// move to z0
+		logger.info("moving back to z0");
+		f = robot.getCurrentCartesianPosition(robot.getFlange());
+		z = f.getZ();
+		dz = z0 - z;
+		robot.move(linRel(0,0,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
 		logger.info("done with point");
 	}
