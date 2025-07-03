@@ -144,12 +144,12 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
         if (response == 0) {
 			logger.info("TCP starting location confirmed");
 			f0 = robot.getCurrentCartesianPosition(robot.getFlange());
-			x0 = f.getX();
-			y0 = f.getY();
-			z0 = f.getZ();
-			a0 = f.getAlphaRad();
-			b0 = f.getBetaRad();
-			c0 = f.getGammaRad();
+			x0 = f0.getX();
+			y0 = f0.getY();
+			z0 = f0.getZ();
+			a0 = f0.getAlphaRad();
+			b0 = f0.getBetaRad();
+			c0 = f0.getGammaRad();
 			logger.info(
 				"start position:\n" + 
 				"x0 = " + String.valueOf(x0) + " mm\n" +
