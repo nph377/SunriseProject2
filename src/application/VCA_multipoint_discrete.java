@@ -189,7 +189,9 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			if (y_up) {
 				for (yn = y0; yn<=y0+yspan; yn += y_increment) {
 					log = "--------------\n" + 
-						"testing point: " +
+						"x0 = " + String.valueOf(x0) + "\n" +
+						"y0 = " + String.valueOf(y0) + "\n" +
+						"new point: " +
 						"xn = " + String.valueOf(xn) + "\n" +
 						"yn = " + String.valueOf(yn);
 					logger.info(log);
@@ -199,7 +201,9 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 			else {
 				for (yn = y0+yspan; yn>=y0; yn -= y_increment) {
 					log = "--------------\n" + 
-						"testing point: " +
+						"x0 = " + String.valueOf(x0) + "\n" +
+						"y0 = " + String.valueOf(y0) + "\n" +
+						"new point: " +
 						"xn = " + String.valueOf(xn) + "\n" +
 						"yn = " + String.valueOf(yn);
 					logger.info(log);
@@ -217,22 +221,28 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		z = f.getZ();
 
 		// move to z0
-		logger.info("moving to z0");
+		logger.info("moving back to z0");
 		dz = z - z0;
 		robot.move(linRel(0,0,dz,0,0,0).setJointVelocityRel(.2));
 
 		// mark
 		// TODO move to next point x,y
+		logger.info("moving to point");
 		f = robot.getCurrentCartesianPosition(robot.getFlange());
 		x = f.getX();
 		y = f.getY();
 		dx = x - xn;
 		dy = y - yn;
-		log = "moving to xn,yn \n" +
-			"dx = " + String.valueOf(dx) + "\n" +
-			"dy = " + String.valueOf(dy);
+		robot.move(linRel(dx,dy,0,0,0,0).setJointVelocityRel(.2));
+
+		f = robot.getCurrentCartesianPosition(robot.getFlange());
+		x = f.getX();
+		y = f.getY();
+		double ex = xn - x;
+		double ey = yn - y;
+		log = "x error: " + String.valueOf(ex) + "\n"
+			+ "y error: " + String.valueOf(ey);
 		logger.info(log);
-		// robot.move(linRel(dx,dy,0,0,0,0).setJointVelocityRel(.2));
 
 		// // TODO move down until touch surface
 		// logger.info("moving down to touch surface");
@@ -245,7 +255,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 		// TODO wait for VCA to be done at this point
 
-		logger.info("done with test point");
+		logger.info("done with point");
 	}
 	
 }
