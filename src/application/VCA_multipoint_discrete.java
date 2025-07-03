@@ -94,7 +94,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 
 		contact = ForceCondition.createSpatialForceCondition(
 			robot.getFlange(), 
-			5.0 // Threshold in Newtons
+			15.0 // Threshold in Newtons
 		);
 	}
 
