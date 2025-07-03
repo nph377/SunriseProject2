@@ -85,17 +85,17 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		double x = f.getX();
 		double y = f.getY();
 		double z = f.getZ();
-		double a = f.getAlphaRad()*180/Math.PI;
-		double b = f.getBetaRad()*180/Math.PI;
-		double c = f.getGammaRad()*180/Math.PI;
+		double a = f.getAlphaRad();
+		double b = f.getBetaRad();
+		double c = f.getGammaRad();
         prompt = "Would you like to orient the TCP vertical?\n" + 
 			"current position:\n" + 
-			"x = " + String.valueOf(x) + "\n" +
-			"y = " + String.valueOf(y) + "\n" +
-			"z = " + String.valueOf(z) + "\n" +
-			"a = " + String.valueOf(a) + "\n" +
-			"b = " + String.valueOf(b) + "\n" +
-			"c = " + String.valueOf(c)
+			"x = " + String.valueOf(x) + " mm\n" +
+			"y = " + String.valueOf(y) + " mm\n" +
+			"z = " + String.valueOf(z) + " mm\n" +
+			"a = " + String.valueOf(a) + " rad\n" +
+			"b = " + String.valueOf(b) + " rad\n" +
+			"c = " + String.valueOf(c) + " rad\n"
 		;
         logger.info(prompt);
     	response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "No", "Yes", "Exit");
@@ -105,7 +105,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		else if (response == 1) {
 			logger.info("orienting TCP");
 			// mark
-			double db = -b * Math.PI/180;
+			double db = b;
 			double dc = 0;
 			robot.move(linRel(0,0,0,0,db,dc).setJointVelocityRel(.2));
 			logger.info("TCP orientation complete");
