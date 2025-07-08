@@ -9,6 +9,7 @@ import com.kuka.task.ITaskLogger;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
 
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.lang.Thread;
 import java.net.Socket;
@@ -42,11 +43,6 @@ public class encoder_test extends RoboticsAPIApplication {
 	@Inject
 	private ITaskLogger logger;
 
-	private boolean p4 = false;
-	private boolean p10 = false;
-	private boolean n4;
-	private boolean n10;
-
 	String serverIP = "todo";
 	int serverPort = 0; // todo
 	Socket socket;
@@ -55,27 +51,21 @@ public class encoder_test extends RoboticsAPIApplication {
 	
 	@Override
 	public void initialize() {
-		// initialize your application here
-		for (int i=0; i<3; i++) {
-			flange.setLEDBlue(true);
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			flange.setLEDBlue(false);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		logger.info("init");
+		try {
+			socket = new Socket(serverIP, serverPort);
+			out = new PrintStream(socket.getOutputStream(), true);
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		} catch (Exception e) {
+			logger.info("error");
+			logger.info(e.toString());
+		} finally {
+			logger.info("done with socket thing");
 		}
 	}
 
 	@Override
 	public void run() {
-		flange.setLEDBlue(false);
+		
 	}
 }
