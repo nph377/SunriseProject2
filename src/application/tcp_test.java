@@ -33,7 +33,7 @@ import java.net.Socket;
  * @see #dispose()
  */
 
-public class encoder_test extends RoboticsAPIApplication {
+public class tcp_test extends RoboticsAPIApplication {
 //	@Inject
 //	private LBR lBR_iiwa_14_R820;
 	@Inject
@@ -58,7 +58,7 @@ public class encoder_test extends RoboticsAPIApplication {
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			logger.info("successful socket connection");
 		} catch (Exception e) {
-			logger.info("error");
+			logger.info("socket error");
 			logger.info(e.toString());
 		} finally {
 			logger.info("init done");
