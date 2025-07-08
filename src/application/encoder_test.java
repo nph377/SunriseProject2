@@ -56,16 +56,18 @@ public class encoder_test extends RoboticsAPIApplication {
 			socket = new Socket(serverIP, serverPort);
 			out = new PrintStream(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			logger.info("successful socket connection");
 		} catch (Exception e) {
 			logger.info("error");
 			logger.info(e.toString());
 		} finally {
-			logger.info("done with socket thing");
+			logger.info("init done");
 		}
 	}
 
 	@Override
 	public void run() {
-		
+		logger.info("run");
+		logger.info("run done");
 	}
 }
