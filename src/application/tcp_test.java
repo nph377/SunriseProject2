@@ -2,16 +2,10 @@ package application;
 
 import javax.inject.Inject;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
-import com.kuka.roboticsAPI.controllerModel.Controller;
 import com.kuka.task.ITaskLogger;
-//import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
-//import com.kuka.roboticsAPI.deviceModel.LBR;
-import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.lang.Thread;
 import java.net.Socket;
 
 /**
@@ -34,12 +28,6 @@ import java.net.Socket;
  */
 
 public class tcp_test extends RoboticsAPIApplication {
-//	@Inject
-//	private LBR lBR_iiwa_14_R820;
-	@Inject
-	private Controller controller;
-	@Inject
-	private MediaFlangeIOGroup flange = new MediaFlangeIOGroup(controller);
 	@Inject
 	private ITaskLogger logger;
 
