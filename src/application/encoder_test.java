@@ -7,7 +7,11 @@ import com.kuka.task.ITaskLogger;
 //import static com.kuka.roboticsAPI.motionModel.BasicMotions.*;
 //import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.generated.ioAccess.MediaFlangeIOGroup;
+
+import java.io.BufferedReader;
+import java.io.PrintStream;
 import java.lang.Thread;
+import java.net.Socket;
 
 /**
  * Implementation of a robot application.
@@ -42,6 +46,12 @@ public class encoder_test extends RoboticsAPIApplication {
 	private boolean p10 = false;
 	private boolean n4;
 	private boolean n10;
+
+	String serverIP = "todo";
+	int serverPort = 0; // todo
+	Socket socket;
+	PrintStream out;
+	BufferedReader in;
 	
 	@Override
 	public void initialize() {
@@ -66,21 +76,6 @@ public class encoder_test extends RoboticsAPIApplication {
 
 	@Override
 	public void run() {
-		// your application execution starts here
 		flange.setLEDBlue(false);
-		
-		while(true) {
-			n4 = flange.getInputX3Pin4();
-			n10 = flange.getInputX3Pin10();
-			if(n4 != p4 || n10 != p10) {
-				flange.setLEDBlue(true);
-				p4 = n4;
-				p10 = n10;
-				logger.info(String.valueOf(p4) + " " + String.valueOf(p10));
-			}
-			else {
-				flange.setLEDBlue(false);
-			}
-		}
 	}
 }
