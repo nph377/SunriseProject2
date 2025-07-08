@@ -56,7 +56,7 @@ public class encoder_test extends RoboticsAPIApplication {
 			}
 			flange.setLEDBlue(false);
 			try {
-				Thread.sleep(100);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
