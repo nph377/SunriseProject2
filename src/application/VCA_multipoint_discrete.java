@@ -254,7 +254,7 @@ public class VCA_multipoint_discrete extends RoboticsAPIApplication {
 		forces = robot.getSensorForExternalForce().getSensorData();
 		logger.info("forces after contact: " + forces.toString());
 
-		// TODO move back up to optimal distance for VCA
+		// move back up to optimal distance for VCA
 		logger.info("backing off for VCA");
 		robot.move(linRel(0,0,VCA_backoff_distance,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
