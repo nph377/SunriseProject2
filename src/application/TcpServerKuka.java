@@ -23,7 +23,7 @@ public class TcpServerKuka extends RoboticsAPIApplication {
         Socket clientSocket = null;
         BufferedReader in = null;
 
-        int port = 3000;
+        int port = 6000;
         getLogger().info("Starting TCP Server on port " + port);
 
         try {
