@@ -31,8 +31,8 @@ public class tcp_test extends RoboticsAPIApplication {
 	@Inject
 	private ITaskLogger logger;
 
-	String serverIP = "todo";
-	int serverPort = 0; // todo
+	String serverIP = "169.254.8.168";
+	int serverPort = 3363; // todo
 	Socket socket;
 	PrintStream out;
 	BufferedReader in;
