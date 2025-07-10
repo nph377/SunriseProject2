@@ -54,6 +54,7 @@ public class TcpServerKuka extends RoboticsAPIApplication {
                 if (in != null) in.close();
                 if (clientSocket != null) clientSocket.close();
                 if (serverSocket != null) serverSocket.close();
+                getLogger().info("done");
             } catch (IOException e) {
                 getLogger().error("Error closing sockets: " + e.getMessage());
             }
