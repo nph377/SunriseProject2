@@ -16,7 +16,7 @@ public class TcpClientApp extends RoboticsAPIApplication {
     }
 
     public void run() {
-        String serverIP = "172.31.1.40"; // Replace with your PC/server IP
+        String serverIP = "172.31.1.110"; // Replace with your PC/server IP
         int port = 30000;
 
         Socket socket = null;
