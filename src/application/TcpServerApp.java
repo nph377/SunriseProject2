@@ -28,7 +28,7 @@ public class TcpServerApp extends RoboticsAPIApplication {
             reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             String line;
-            while ((line = reader.readLine()) != null && ((line = reader.readLine()) !="exit") ) {
+            while ((line = reader.readLine()) != null) {
                 getLogger().info("Received: " + line);
                 // Add robot logic here
                 int value=Integer.parseInt(line);
