@@ -28,12 +28,16 @@ public class TcpServerApp extends RoboticsAPIApplication {
             reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null && (line !="exit") ) {
                 getLogger().info("Received: " + line);
                 // Add robot logic here
                 int value=Integer.parseInt(line);
                 PTP ptpToTransportPosition = ptp(value, Math.toRadians(25), 0, Math.toRadians(90), 0, 0, 0);
                 lbr.move(ptpToTransportPosition);
+            }
+            while ((line = reader.readLine()) != null ) {
+                getLogger().info("Received: " + line);
+                // Add robot logic here
             }
 
         } catch (Exception e) {
