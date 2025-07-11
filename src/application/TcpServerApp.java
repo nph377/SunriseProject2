@@ -33,6 +33,7 @@ public class TcpServerApp extends RoboticsAPIApplication {
                 // Add robot logic here
                 int value=Integer.parseInt(line);
                 PTP ptpToTransportPosition = ptp(value, Math.toRadians(25), 0, Math.toRadians(90), 0, 0, 0);
+                ptpToTransportPosition.setJointVelocityRel(0.25);
                 lbr.move(ptpToTransportPosition);
             }
             while ((line = reader.readLine()) != null ) {
