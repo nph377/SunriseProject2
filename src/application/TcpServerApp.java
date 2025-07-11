@@ -13,6 +13,17 @@ import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.motionModel.PTP;
 
 public class TcpServerApp extends RoboticsAPIApplication {
+	public boolean isNumeric(String input) {
+	    if (input == null || input.trim().isEmpty()) {
+	        return false;
+	    }
+	    try {
+	        Integer.parseInt(input.trim());
+	        return true;  // It is a valid integer
+	    } catch (NumberFormatException e) {
+	        return false; // Not a number
+	    }
+	}
 	@Inject
 	private LBR lbr;
     public void run() {
@@ -31,11 +42,16 @@ public class TcpServerApp extends RoboticsAPIApplication {
             while ((line = reader.readLine()) != null) {
                 getLogger().info("Received: " + line);
                 // Add robot logic here
-                int value=Integer.parseInt(line);
-                if (value <99 && value>0){
-                	PTP ptpToTransportPosition = ptp(value, Math.toRadians(25), 0, Math.toRadians(90), 0, 0, 0);
-                    ptpToTransportPosition.setJointVelocityRel(0.25);
-                    lbr.move(ptpToTransportPosition);
+                if (isNumeric(line)) {
+                    int value = Integer.parseInt(line);
+                    getLogger().info("User input is a number: " + value);
+                    if (value <99 && value>0){
+                    	PTP ptpToTransportPosition = ptp(value, Math.toRadians(25), 0, Math.toRadians(90), 0, 0, 0);
+                        ptpToTransportPosition.setJointVelocityRel(0.25);
+                        lbr.move(ptpToTransportPosition);
+                    }
+                } else {
+                    getLogger().info("User input is a string: " + line);
                 }
             }
         } catch (Exception e) {
