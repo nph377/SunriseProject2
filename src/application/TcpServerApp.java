@@ -1,11 +1,20 @@
 package application;
+import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import javax.inject.Inject;
+
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
+import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.motionModel.PTP;
 
 public class TcpServerApp extends RoboticsAPIApplication {
+	@Inject
+	private LBR lbr;
     public void run() {
         ServerSocket serverSocket = null;
         Socket clientSocket = null;
@@ -22,6 +31,9 @@ public class TcpServerApp extends RoboticsAPIApplication {
             while ((line = reader.readLine()) != null) {
                 getLogger().info("Received: " + line);
                 // Add robot logic here
+                int value=Integer.parseInt(line);
+                PTP ptpToTransportPosition = ptp(value, Math.toRadians(25), 0, Math.toRadians(90), 0, 0, 0);
+                lbr.move(ptpToTransportPosition);
             }
 
         } catch (Exception e) {
