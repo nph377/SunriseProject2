@@ -54,11 +54,11 @@ public class TcpServerApp extends RoboticsAPIApplication {
 	                int value = Integer.parseInt(line);
 	                getLogger().info("User input is a number: " + value);
 
-	                if (value < 99 && value > 0) {
+	                /*if (value < 99 && value > 0) {
 	                    PTP ptpToTransportPosition = ptp(value, Math.toRadians(25), 0, Math.toRadians(90), 0, 0, 0);
 	                    ptpToTransportPosition.setJointVelocityRel(0.25);
 	                    lbr.move(ptpToTransportPosition);
-	                }
+	                }*/
 	            } else {
 	                getLogger().info("User input is a string: " + line);
 	            }
