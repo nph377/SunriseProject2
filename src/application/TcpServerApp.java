@@ -26,44 +26,53 @@ public class TcpServerApp extends RoboticsAPIApplication {
 	}
 	@Inject
 	private LBR lbr;
-    public void run() {
-        ServerSocket serverSocket = null;
-        Socket clientSocket = null;
-        BufferedReader reader = null;
-        int port = 30000;
+	@Override
+	public void run() {
+	    ServerSocket serverSocket = null;
+	    Socket clientSocket = null;
+	    BufferedReader reader = null;
+	    int port = 30000;
 
-        try {
-            getLogger().info("Starting TCP server...");
-            serverSocket = new ServerSocket(port);
-            clientSocket = serverSocket.accept();
-            reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+	    try {
+	        getLogger().info("Starting TCP server...");
+	        serverSocket = new ServerSocket(port);
+	        clientSocket = serverSocket.accept();
+	        reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                getLogger().info("Received: " + line);
-                // Add robot logic here
-                if (isNumeric(line)) {
-                    int value = Integer.parseInt(line);
-                    getLogger().info("User input is a number: " + value);
-                    if (value <99 && value>0){
-                    	PTP ptpToTransportPosition = ptp(value, Math.toRadians(25), 0, Math.toRadians(90), 0, 0, 0);
-                        ptpToTransportPosition.setJointVelocityRel(0.25);
-                        lbr.move(ptpToTransportPosition);
-                    }
-                } else {
-                    getLogger().info("User input is a string: " + line);
-                }
-            }
-        } catch (Exception e) {
-            getLogger().error("TCP error: " + e.getMessage());
-        } finally {
-            try {
-                if (reader != null) reader.close();
-                if (clientSocket != null) clientSocket.close();
-                if (serverSocket != null) serverSocket.close();
-            } catch (Exception e) {
-                getLogger().error("Close error: " + e.getMessage());
-            }
-        }
-    }
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+	            getLogger().info("Received: " + line);
+
+	            // Exit condition
+	            if (line.trim().equalsIgnoreCase("exit")) {
+	                getLogger().info("'exit' command received. Stopping server.");
+	                break;
+	            }
+
+	            // Add robot logic here
+	            if (isNumeric(line)) {
+	                int value = Integer.parseInt(line);
+	                getLogger().info("User input is a number: " + value);
+
+	                if (value < 99 && value > 0) {
+	                    PTP ptpToTransportPosition = ptp(value, Math.toRadians(25), 0, Math.toRadians(90), 0, 0, 0);
+	                    ptpToTransportPosition.setJointVelocityRel(0.25);
+	                    lbr.move(ptpToTransportPosition);
+	                }
+	            } else {
+	                getLogger().info("User input is a string: " + line);
+	            }
+	        }
+	    } catch (Exception e) {
+	        getLogger().error("TCP error: " + e.getMessage());
+	    } finally {
+	        try {
+	            if (reader != null) reader.close();
+	            if (clientSocket != null) clientSocket.close();
+	            if (serverSocket != null) serverSocket.close();
+	        } catch (Exception e) {
+	            getLogger().error("Close error: " + e.getMessage());
+	        }
+	    }
+	}
 }
