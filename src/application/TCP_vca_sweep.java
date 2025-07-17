@@ -31,8 +31,8 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 
 	public void move(double x, double y, double z) {
 		String log = "move: " +
-		String.valueOf(x) + "\\" + 
-		String.valueOf(y) + "\\" +
+		String.valueOf(x) + ", " + 
+		String.valueOf(y) + ", " +
 		String.valueOf(z);
 		getLogger().info(log);
 	}
@@ -63,7 +63,6 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 	            else if (isNumeric(line)) {
 	                int value = Integer.parseInt(line);
 	                getLogger().info("User input is a number: " + value);
-					move(value, value, value);
 	                //add logic here
 	                /*if (value < 99 && value > 0) {
 	                    PTP ptpToTransportPosition = ptp(value, Math.toRadians(25), 0, Math.toRadians(90), 0, 0, 0);
@@ -71,6 +70,13 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 	                    lbr.move(ptpToTransportPosition);
 	                }*/
 				} 
+				else if (line.trim().split(" ")[0].equals("move")) {
+					String[] values = line.split(" ");
+					double x = Double.parseDouble(values[1]);
+					double y = Double.parseDouble(values[2]);
+					double z = Double.parseDouble(values[3]);
+					move(x, y, z);
+				}
 				else if (line.trim().equalsIgnoreCase("hi")){
 					hello();
 				}
