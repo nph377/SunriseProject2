@@ -61,7 +61,7 @@ public class TcpServerApp extends RoboticsAPIApplication {
 	                    lbr.move(ptpToTransportPosition);
 	                }*/
 	            } else {
-	            	if (line.trim() == "hi"){
+	            	if (line.trim().equalsIgnoreCase("hi")){
 	            		hello();
 	            	}
 	            	else {
