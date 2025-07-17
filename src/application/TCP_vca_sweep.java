@@ -72,10 +72,15 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 				} 
 				else if (line.trim().split(" ")[0].equals("move")) {
 					String[] values = line.split(" ");
-					double x = Double.parseDouble(values[1]);
-					double y = Double.parseDouble(values[2]);
-					double z = Double.parseDouble(values[3]);
-					move(x, y, z);
+					if (values.length==4) {
+						double x = Double.parseDouble(values[1]);
+						double y = Double.parseDouble(values[2]);
+						double z = Double.parseDouble(values[3]);
+						move(x, y, z);
+					}
+					else {
+						getLogger().info("move command takes 3 parameters");
+					}
 				}
 				else if (line.trim().equalsIgnoreCase("hi")){
 					hello();
