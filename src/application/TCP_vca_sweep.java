@@ -147,7 +147,7 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 
 		// on the first iteration, the robot moves to original position ...
 		// at program start if this line isn't here - I have no clue why
-		robot.move(linRel(0,0,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+		// robot.moveAsync(linRel(0,0,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 
 		Frame f1 = robot.getCurrentCartesianPosition(robot.getFlange());
 		double x1 = f1.getX() - x0;
@@ -156,7 +156,7 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 		double dx = x - x1;
 		double dy = y - y1;
 		double dz = z - z1;
-		robot.move(linRel(dx,dy,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+		robot.moveAsync(linRel(dx,dy,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 	}
 
 }
