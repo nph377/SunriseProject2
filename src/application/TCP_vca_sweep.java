@@ -179,11 +179,6 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 		String.valueOf(z);
 		getLogger().info(log);
 
-		if (x>10 || y>10 || z>10) {
-			getLogger().info("not allowing movement past 10,10,10 right now");
-			return;
-		}
-
 		// on the first iteration, the robot moves to original position ...
 		// at program start if this line isn't here - I have no clue why
 		// robot.moveAsync(linRel(0,0,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
