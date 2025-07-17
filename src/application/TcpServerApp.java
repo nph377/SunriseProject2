@@ -19,11 +19,16 @@ public class TcpServerApp extends RoboticsAPIApplication {
 	    }
 	    try {
 	        Integer.parseInt(input.trim());
-	        return true;  // It is a valid integer
+	        return true; 
 	    } catch (NumberFormatException e) {
-	        return false; // Not a number
+	        return false;
 	    }
 	}
+	
+	public void hello(){
+		getLogger().info("hi");
+	}
+	
 	@Inject
 	private LBR lbr;
 	@Override
@@ -42,25 +47,26 @@ public class TcpServerApp extends RoboticsAPIApplication {
 	        String line;
 	        while ((line = reader.readLine()) != null) {
 	            getLogger().info("Received: " + line);
-
-	            // Exit condition
 	            if (line.trim().equalsIgnoreCase("exit")) {
 	                getLogger().info("'exit' command received. Stopping server.");
 	                break;
 	            }
-
-	            // Add robot logic here
 	            if (isNumeric(line)) {
 	                int value = Integer.parseInt(line);
 	                getLogger().info("User input is a number: " + value);
-
+	                //add logic here
 	                /*if (value < 99 && value > 0) {
 	                    PTP ptpToTransportPosition = ptp(value, Math.toRadians(25), 0, Math.toRadians(90), 0, 0, 0);
 	                    ptpToTransportPosition.setJointVelocityRel(0.25);
 	                    lbr.move(ptpToTransportPosition);
 	                }*/
 	            } else {
-	                getLogger().info("User input is a string: " + line);
+	            	if (line == "hi"){
+	            		hello();
+	            	}
+	            	else {
+						getLogger().info("User input is a string: " + line);
+	            	}
 	            }
 	        }
 	    } catch (Exception e) {
