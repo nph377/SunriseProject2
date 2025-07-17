@@ -21,6 +21,14 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 	
 	private String prompt;
 	private int response;
+
+	private Frame f;
+	private double x;
+	private double y;
+	private double z;
+	private double a;
+	private double b;
+	private double c;
 	private Frame f0;
 	private double x0;
 	private double y0;
@@ -48,6 +56,32 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 
 	@Override
 	public void run() {
+		//////////////    ORIENT TCP VERTICAL
+		prompt = "Would you like to orient the TCP vertical?";
+    	response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "No", "Yes", "Exit");
+		if (response == 0) {
+			getLogger().info("TCP orientation confirmed");
+		}
+		else if (response == 1) {
+			f = robot.getCurrentCartesianPosition(robot.getFlange());
+			b = f.getBetaRad();
+			c = f.getGammaRad();
+			getLogger().info("orienting TCP");
+			double db = b;
+			double dc;
+			if (c > 0)
+				dc = -c + Math.PI;
+			else
+				dc = -c - Math.PI;
+			robot.move(linRel(0,0,0,0,db,dc).setJointVelocityRel(.2));
+			getLogger().info("TCP orientation complete");
+		}
+		else {
+			getLogger().info("TERMINATING PROGRAM EARLY");
+			return;
+		}
+		
+		//////////////    CONFIRM STARTING LOCATION
 		prompt = "Is TCP at the corner of sample - minimum world x,y (check the sticky note)\n" +
 			"and above maximum height of sample? \n*** THIS IS VERY IMPORTANT TO AVOID COLLISIONS ***\n" + 
 			"this must be done before starting the program because of a bug I cannot figure out";
@@ -76,11 +110,11 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
             return;
 		}
 
+		//////////////    BEGIN TCP COMMS AND SWEEP
 	    ServerSocket serverSocket = null;
 	    Socket clientSocket = null;
 	    BufferedReader reader = null;
 	    int port = 30000;
-
 	    try {
 	        getLogger().info("Starting TCP server...");
 	        serverSocket = new ServerSocket(port);
