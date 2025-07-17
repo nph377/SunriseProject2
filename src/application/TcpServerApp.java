@@ -26,7 +26,7 @@ public class TcpServerApp extends RoboticsAPIApplication {
 	}
 	
 	public void hello(){
-		getLogger().info("hi");
+		getLogger().info("heloooooo");
 	}
 	
 	@Inject
@@ -61,7 +61,7 @@ public class TcpServerApp extends RoboticsAPIApplication {
 	                    lbr.move(ptpToTransportPosition);
 	                }*/
 	            } else {
-	            	if (line == "hi"){
+	            	if (line.trim() == "hi"){
 	            		hello();
 	            	}
 	            	else {
