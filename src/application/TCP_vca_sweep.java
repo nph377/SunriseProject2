@@ -28,6 +28,14 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 	public void hello(){
 		getLogger().info("heloooooo");
 	}
+
+	public void move(double x, double y, double z) {
+		String log = "move: " +
+		String.valueOf(x) + "\\" + 
+		String.valueOf(y) + "\\" +
+		String.valueOf(z);
+		getLogger().info(log);
+	}
 	
 	@Inject
 	private LBR lbr;
@@ -52,22 +60,22 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 	                getLogger().info("'exit' received. Stopping server.");
 	                break;
 	            }
-	            if (isNumeric(line)) {
+	            else if (isNumeric(line)) {
 	                int value = Integer.parseInt(line);
 	                getLogger().info("User input is a number: " + value);
+					move(value, value, value);
 	                //add logic here
 	                /*if (value < 99 && value > 0) {
 	                    PTP ptpToTransportPosition = ptp(value, Math.toRadians(25), 0, Math.toRadians(90), 0, 0, 0);
 	                    ptpToTransportPosition.setJointVelocityRel(0.25);
 	                    lbr.move(ptpToTransportPosition);
 	                }*/
-	            } else {
-	            	if (line.trim().equalsIgnoreCase("hi")){
-	            		hello();
-	            	}
-	            	else {
-						getLogger().info("User input is a string: " + line);
-	            	}
+				} 
+				else if (line.trim().equalsIgnoreCase("hi")){
+					hello();
+				}
+				else {
+					getLogger().info("User input is a string: " + line);
 	            }
 	        }
 	    } catch (Exception e) {
