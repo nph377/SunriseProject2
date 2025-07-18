@@ -155,7 +155,7 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 					hello();
 				}
 				else {
-					getLogger().info("User input is a string: " + line);
+					getLogger().info("User input is a string: " +line);
 	            }
 	        }
 	    } catch (Exception e) {
