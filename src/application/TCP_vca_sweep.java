@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
+import com.kuka.roboticsAPI.motionModel.CartesianPTP;
 import com.kuka.roboticsAPI.motionModel.PTP;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
 
@@ -109,7 +110,11 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 			getLogger().info("TERMINATING PROGRAM EARLY");
             return;
 		}
-        move(-382.71,292.78,163.56);
+        // Move 1mm up in Z-direction
+        Frame newPose = f0.copyWithRedundancy();
+        newPose.setZ(f0.getZ() + 1.0);  // 1mm up
+        robot.move(new CartesianPTP(newPose));
+        
 		//////////////    BEGIN TCP COMMS AND SWEEP
 	    ServerSocket serverSocket = null;
 	    Socket clientSocket = null;
@@ -178,22 +183,7 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 		String.valueOf(y) + ", " +
 		String.valueOf(z);
 		getLogger().info(log);
-		Frame test_f = robot.getCurrentCartesianPosition(robot.getFlange());
-		double test_x0 = test_f.getX();
-		double test_y0 = test_f.getY();
-		double test_z0 = test_f.getZ();
-		double test_a0 = test_f.getAlphaRad();
-		double test_b0 = test_f.getBetaRad();
-		double test_c0 = test_f.getGammaRad();
-		getLogger().info(
-			"start position:\n" + 
-			"testx0 = " + String.valueOf(test_x0) + " mm\n" +
-			"testy0 = " + String.valueOf(test_y0) + " mm\n" +
-			"testz0 = " + String.valueOf(test_z0) + " mm\n" +
-			"testa0 = " + String.valueOf(test_a0 * 180/Math.PI) + " deg\n" +
-			"testb0 = " + String.valueOf(test_b0 * 180/Math.PI) + " deg\n" +
-			"testc0 = " + String.valueOf(test_c0 * 180/Math.PI) + " deg\n"
-		);
+		
 		// on the first iteration, the robot moves to original position ...
 		// at program start if this line isn't here - I have no clue why
 		// robot.moveAsync(linRel(0,0,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
