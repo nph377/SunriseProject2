@@ -114,17 +114,8 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 			getLogger().info("TERMINATING PROGRAM EARLY");
             return;
 		}
-        Frame currentPose = robot.getCurrentCartesianPosition(robot.getFlange());
-
-        // Create a new frame 1mm higher in Z
-        Frame targetPose = currentPose.copyWithRedundancy();
-        targetPose.setZ(currentPose.getZ() + 1.0);  // 1 mm up
-
-        // Create LIN motion and set speed (e.g., 10 mm/s = 0.01 m/s)
-        LIN motion = new LIN(targetPose);
-        motion.setCartVelocity(0.01);  // Velocity in m/s
-        // Execute the motion
-        robot.move(motion);
+        
+        robot.moveAsync(linRel(x0,y0,z0+0.1,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 		//////////////    BEGIN TCP COMMS AND SWEEP
 	    ServerSocket serverSocket = null;
 	    Socket clientSocket = null;
