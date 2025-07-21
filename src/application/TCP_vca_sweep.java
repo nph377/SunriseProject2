@@ -115,7 +115,6 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
             return;
 		}
         
-        robot.moveAsync(linRel(x0,y0,z0-10,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 		//////////////    BEGIN TCP COMMS AND SWEEP
 	    ServerSocket serverSocket = null;
 	    Socket clientSocket = null;
