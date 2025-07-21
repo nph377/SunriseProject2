@@ -13,8 +13,12 @@ import com.kuka.roboticsAPI.geometricModel.Frame;
 import com.kuka.roboticsAPI.applicationModel.RoboticsAPIApplication;
 import com.kuka.roboticsAPI.deviceModel.LBR;
 import com.kuka.roboticsAPI.motionModel.CartesianPTP;
+import com.kuka.roboticsAPI.motionModel.LIN;
 import com.kuka.roboticsAPI.motionModel.PTP;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
+import com.kuka.roboticsAPI.motionModel.BasicMotions;
+import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceControlMode;
+
 
 public class TCP_vca_sweep extends RoboticsAPIApplication {
 	@Inject
@@ -110,11 +114,17 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 			getLogger().info("TERMINATING PROGRAM EARLY");
             return;
 		}
-        // Move 1mm up in Z-direction
-        Frame newPose = f0.copyWithRedundancy();
-        newPose.setZ(f0.getZ() + 1.0);  // 1mm up
-        robot.move(new CartesianPTP(newPose));
-        
+        Frame currentPose = robot.getCurrentCartesianPosition(robot.getFlange());
+
+        // Create a new frame 1mm higher in Z
+        Frame targetPose = currentPose.copyWithRedundancy();
+        targetPose.setZ(currentPose.getZ() + 1.0);  // 1 mm up
+
+        // Create LIN motion and set speed (e.g., 10 mm/s = 0.01 m/s)
+        LIN motion = new LIN(targetPose);
+        motion.setCartVelocity(0.01);  // Velocity in m/s
+        // Execute the motion
+        robot.move(motion);
 		//////////////    BEGIN TCP COMMS AND SWEEP
 	    ServerSocket serverSocket = null;
 	    Socket clientSocket = null;
