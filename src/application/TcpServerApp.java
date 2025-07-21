@@ -36,7 +36,7 @@ public class TcpServerApp extends RoboticsAPIApplication {
 	    ServerSocket serverSocket = null;
 	    Socket clientSocket = null;
 	    BufferedReader reader = null;
-	    int port = 35002;
+	    int port = 30001;
 
 	    try {
 	        getLogger().info("Starting TCP server...");
