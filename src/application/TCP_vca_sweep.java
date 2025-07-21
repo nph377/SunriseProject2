@@ -109,7 +109,7 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 			getLogger().info("TERMINATING PROGRAM EARLY");
             return;
 		}
-
+        move(-382.71,292.78,163.56);
 		//////////////    BEGIN TCP COMMS AND SWEEP
 	    ServerSocket serverSocket = null;
 	    Socket clientSocket = null;
