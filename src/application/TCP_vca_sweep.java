@@ -114,7 +114,7 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 	    ServerSocket serverSocket = null;
 	    Socket clientSocket = null;
 	    BufferedReader reader = null;
-	    int port = 35001;
+	    int port = 30001;
 	    try {
 	        getLogger().info("Starting TCP server...");
 	        serverSocket = new ServerSocket(port);
