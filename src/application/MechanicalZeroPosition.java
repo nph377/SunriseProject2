@@ -21,7 +21,7 @@ public class MechanicalZeroPosition extends RoboticsAPIApplication {
 	}
 
 	public void run() {
-		getLogger().info("Show modal dialog and wait for user to confirm");
+		getLogger().info("Show modal dialog and wait for user to confirm.");
         int isCancel = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, informationText, "OK", "Cancel");
         if (isCancel == 1)
         {
