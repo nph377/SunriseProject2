@@ -29,7 +29,7 @@ public class python_control extends RoboticsAPIApplication {
 	ServerSocket serverSocket = null;
 	Socket clientSocket = null;
 	BufferedReader reader = null;
-	int port = 30005;
+	int port = 30007;
 	
 	private String prompt;
 	private int response;
@@ -109,18 +109,13 @@ public class python_control extends RoboticsAPIApplication {
 		robot.moveAsync(linRel(dx,dy,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
 	}
 	
-	////////////////////////////////////////////////////////////////////////////
-	/////////////////////////    INIT/MAIN/EXIT METHODS    /////////////////////
-	////////////////////////////////////////////////////////////////////////////
-	
-	@Override
-	public void initialize() {
+	public void init_tcp() {
 		try {
-		  getLogger().info("Starting TCP server...");
-		  serverSocket = new ServerSocket(port);
-		  clientSocket = serverSocket.accept();
-		  reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		  getLogger().info("TCP server online");
+		    getLogger().info("Starting TCP server...");
+			serverSocket = new ServerSocket(port);
+			clientSocket = serverSocket.accept();
+			reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			getLogger().info("TCP server online");
 		}
 		catch (Exception e) {
 	        getLogger().error("TCP error: " + e.getMessage());
@@ -134,6 +129,15 @@ public class python_control extends RoboticsAPIApplication {
 	            getLogger().error("Close error: " + e2.getMessage());
 	        }
 	    }
+	}
+	
+	////////////////////////////////////////////////////////////////////////////
+	/////////////////////////    INIT/MAIN/EXIT METHODS    /////////////////////
+	////////////////////////////////////////////////////////////////////////////
+	
+	@Override
+	public void initialize() {
+		init_tcp();
 	}
 	
 	@Override
@@ -172,6 +176,8 @@ public class python_control extends RoboticsAPIApplication {
 				getLogger().info("Unknown command from python: " + line);
 		    }
 		}
+		
+		dispose();
 	}
 	
 	@Override
