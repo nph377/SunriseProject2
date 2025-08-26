@@ -29,7 +29,7 @@ public class python_control extends RoboticsAPIApplication {
 	ServerSocket serverSocket = null;
 	Socket clientSocket = null;
 	BufferedReader reader = null;
-	int port = 30000;
+	int port = 30004;
 	
 	private String prompt;
 	private int response;
@@ -134,18 +134,6 @@ public class python_control extends RoboticsAPIApplication {
 	            getLogger().error("Close error: " + e2.getMessage());
 	        }
 	    }
-		finally {
-			if (!program_running) {
-				try {
-		            if (reader != null) reader.close();
-		            if (clientSocket != null) clientSocket.close();
-		            if (serverSocket != null) serverSocket.close();
-		        }
-		        catch (Exception e2) {
-		            getLogger().error("Close error: " + e2.getMessage());
-		        }
-			}
-		}
 	}
 	
 	@Override
@@ -189,6 +177,14 @@ public class python_control extends RoboticsAPIApplication {
 	@Override
     public void dispose() {
         program_running = false; // signal to stop the loop
+        try {
+            if (reader != null) reader.close();
+            if (clientSocket != null) clientSocket.close();
+            if (serverSocket != null) serverSocket.close();
+        }
+        catch (Exception e2) {
+            getLogger().error("Close error: " + e2.getMessage());
+        }
         super.dispose();
     }
 
