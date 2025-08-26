@@ -25,7 +25,6 @@ import com.kuka.roboticsAPI.deviceModel.LBR;
  * @see #dispose()
  */
 public class while_loop_test extends RoboticsAPIApplication {
-	@Inject
 	private boolean stopRequested = false;
 
 	@Override
