@@ -25,7 +25,7 @@ import com.kuka.roboticsAPI.geometricModel.Frame;
  * @see #run()
  * @see #dispose()
  */
-public class orient_TCP extends RoboticsAPIApplication {
+public class orient_tool_straight_down extends RoboticsAPIApplication {
 	@Inject
 	private LBR robot;
 	private Frame f;
