@@ -29,7 +29,7 @@ public class python_control extends RoboticsAPIApplication {
 	ServerSocket serverSocket = null;
 	Socket clientSocket = null;
 	BufferedReader reader = null;
-	int port = 30004;
+	int port = 30005;
 	
 	private String prompt;
 	private int response;
