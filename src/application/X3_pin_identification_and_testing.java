@@ -43,14 +43,12 @@ public class X3_pin_identification_and_testing extends RoboticsAPIApplication {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			flange.setLEDBlue(false);
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
