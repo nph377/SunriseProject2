@@ -134,6 +134,18 @@ public class python_control extends RoboticsAPIApplication {
 	            getLogger().error("Close error: " + e2.getMessage());
 	        }
 	    }
+		finally {
+			if (!program_running) {
+				try {
+		            if (reader != null) reader.close();
+		            if (clientSocket != null) clientSocket.close();
+		            if (serverSocket != null) serverSocket.close();
+		        }
+		        catch (Exception e2) {
+		            getLogger().error("Close error: " + e2.getMessage());
+		        }
+			}
+		}
 	}
 	
 	@Override
