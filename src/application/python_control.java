@@ -24,93 +24,77 @@ import com.kuka.roboticsAPI.motionModel.controlModeModel.CartesianImpedanceContr
 
 public class python_control extends RoboticsAPIApplication {
 	@Inject
-	private LBR robot;
+	LBR robot;
 	
-	private boolean program_running = true;
+	boolean program_running = true;
 	ServerSocket serverSocket = null;
 	Socket clientSocket = null;
 	BufferedReader reader = null;
 	PrintWriter writer = null;
+	
 	int port = 30007;
 	
-	private String prompt;
-	private int response;
-
-	private Frame f;
-	private double x;
-	private double y;
-	private double z;
-	private double a;
-	private double b;
-	private double c;
-	private Frame f0;
-	private double x0;
-	private double y0;
-	private double z0;
-	private double a0;
-	private double b0;
-	private double c0;
-
 	////////////////////////////////////////////////////////////////////////////
 	/////////////////////////    CUSTOM METHODS    /////////////////////////////
 	////////////////////////////////////////////////////////////////////////////
 	
-	public void hello(){
+	void hello(){
 		getLogger().info("hello from kuka");
 		writer.println("hello from kuka");
 	}
 
-	public void confirm_starting_coordinates() {
-		prompt = "confirm the starting location.\n" +
-			"is the tool above the maximum height of sample? \n*** THIS IS VERY IMPORTANT TO AVOID COLLISIONS ***\n";
-	    response = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, prompt, "Yes", "No");
-	    if (response == 0) {
-			getLogger().info("TCP starting location confirmed");
-			f0 = robot.getCurrentCartesianPosition(robot.getFlange());
-			x0 = f0.getX();
-			y0 = f0.getY();
-			z0 = f0.getZ();
-			a0 = f0.getAlphaRad();
-			b0 = f0.getBetaRad();
-			c0 = f0.getGammaRad();
+	public void send_coordinates(boolean print_log) {
+		getLogger().info("TCP starting location confirmed");
+		Frame f = robot.getCurrentCartesianPosition(robot.getFlange());
+		double x = f.getX();
+		double y = f.getY();
+		double z = f.getZ();
+		double a = f.getAlphaRad();
+		double b = f.getBetaRad();
+		double c = f.getGammaRad();
+		writer.println(
+			String.valueOf(x) + " " +
+			String.valueOf(y) + " " +
+			String.valueOf(z) + " " +
+			String.valueOf(a * 180/Math.PI) + " " +
+			String.valueOf(b * 180/Math.PI) + " " +
+			String.valueOf(c * 180/Math.PI) + "\n"
+		);
+		if(print_log) {
 			getLogger().info(
-				"start position:\n" + 
-				"x0 = " + String.valueOf(x0) + " mm\n" +
-				"y0 = " + String.valueOf(y0) + " mm\n" +
-				"z0 = " + String.valueOf(z0) + " mm\n" +
-				"a0 = " + String.valueOf(a0 * 180/Math.PI) + " deg\n" +
-				"b0 = " + String.valueOf(b0 * 180/Math.PI) + " deg\n" +
-				"c0 = " + String.valueOf(c0 * 180/Math.PI) + " deg\n"
+					"start position:\n" + 
+					"x = " + String.valueOf(x) + " mm\n" +
+					"y = " + String.valueOf(y) + " mm\n" +
+					"z = " + String.valueOf(z) + " mm\n" +
+					"a = " + String.valueOf(a * 180/Math.PI) + " deg\n" +
+					"b = " + String.valueOf(b * 180/Math.PI) + " deg\n" +
+					"c = " + String.valueOf(c * 180/Math.PI) + " deg\n"
 			);
-	    }
-		else {
-			getLogger().info("TERMINATING PROGRAM EARLY");
-	        program_running = false;
 		}
 	}
 	
 	// relative to program starting position
 	// TODO: use lin instead of linrel
-	public void move(double x, double y, double z) {
-		String log = "move: " +
-		String.valueOf(x) + ", " + 
-		String.valueOf(y) + ", " +
-		String.valueOf(z);
-		getLogger().info(log);
-		
-		// on the first iteration, the robot moves to original position ...
-		// at program start if this line isn't here - I have no clue why
-		// robot.moveAsync(linRel(0,0,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
-
-		Frame f1 = robot.getCurrentCartesianPosition(robot.getFlange());
-		double x1 = f1.getX() - x0;
-		double y1 = f1.getY() - y0;
-		double z1 = f1.getZ() - z0;
-		double dx = x - x1;
-		double dy = y - y1;
-		double dz = z - z1;
-		robot.moveAsync(linRel(dx,dy,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
-	}
+//	public void move(double x, double y, double z) {
+//		String log = "move: " +
+//		String.valueOf(x) + ", " + 
+//		String.valueOf(y) + ", " +
+//		String.valueOf(z);
+//		getLogger().info(log);
+//		
+//		// on the first iteration, the robot moves to original position ...
+//		// at program start if this line isn't here - I have no clue why
+//		// robot.moveAsync(linRel(0,0,0,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+//
+//		Frame f1 = robot.getCurrentCartesianPosition(robot.getFlange());
+//		double x1 = f1.getX() - x0;
+//		double y1 = f1.getY() - y0;
+//		double z1 = f1.getZ() - z0;
+//		double dx = x - x1;
+//		double dy = y - y1;
+//		double dz = z - z1;
+////		robot.moveAsync(linRel(dx,dy,dz,0,0,0).setReferenceFrame(robot.getRootFrame()).setJointVelocityRel(.2));
+//	}
 	
 	public void init_tcp() {
 		try {
@@ -162,6 +146,15 @@ public class python_control extends RoboticsAPIApplication {
 		        getLogger().info("'exit' received. Stopping server.");
 		        break;
 		    }
+		    else if (command[0].equalsIgnoreCase("send_coordinates"))
+			{
+		    	if (command.length > 1 && command[1].equalsIgnoreCase("print_log")) {
+		    		send_coordinates(true);
+		    	}
+		    	else {
+		    		send_coordinates(false);
+		    	}
+			}
 			else if (command[0].equals("move"))
 			{
 				String[] values = line.split(" ");
