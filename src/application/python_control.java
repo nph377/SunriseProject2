@@ -43,6 +43,7 @@ public class python_control extends RoboticsAPIApplication {
 		writer.println("hello from kuka");
 	}
 
+	// sends python mm, rads; log prints mm, deg
 	public void send_coordinates(boolean print_log) {
 		getLogger().info("TCP starting location confirmed");
 		Frame f = robot.getCurrentCartesianPosition(robot.getFlange());
@@ -56,9 +57,9 @@ public class python_control extends RoboticsAPIApplication {
 			String.valueOf(x) + " " +
 			String.valueOf(y) + " " +
 			String.valueOf(z) + " " +
-			String.valueOf(a * 180/Math.PI) + " " +
-			String.valueOf(b * 180/Math.PI) + " " +
-			String.valueOf(c * 180/Math.PI) + "\n"
+			String.valueOf(a) + " " +
+			String.valueOf(b) + " " +
+			String.valueOf(c)
 		);
 		if(print_log) {
 			getLogger().info(
