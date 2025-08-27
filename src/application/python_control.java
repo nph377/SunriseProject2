@@ -38,6 +38,7 @@ public class python_control extends RoboticsAPIApplication {
 	/////////////////////////    CUSTOM METHODS    /////////////////////////////
 	////////////////////////////////////////////////////////////////////////////
 	
+	// just a test function
 	void hello(){
 		getLogger().info("hello from kuka");
 		writer.println("hello from kuka");
