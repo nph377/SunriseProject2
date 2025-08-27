@@ -5,6 +5,7 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -29,6 +30,7 @@ public class python_control extends RoboticsAPIApplication {
 	ServerSocket serverSocket = null;
 	Socket clientSocket = null;
 	BufferedReader reader = null;
+	PrintWriter writer = null;
 	int port = 30007;
 	
 	private String prompt;
@@ -54,7 +56,8 @@ public class python_control extends RoboticsAPIApplication {
 	////////////////////////////////////////////////////////////////////////////
 	
 	public void hello(){
-		getLogger().info("heloooooo");
+		getLogger().info("hello from kuka");
+		writer.println("hello from kuka");
 	}
 
 	public void confirm_starting_coordinates() {
@@ -115,6 +118,7 @@ public class python_control extends RoboticsAPIApplication {
 			serverSocket = new ServerSocket(port);
 			clientSocket = serverSocket.accept();
 			reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			writer = new PrintWriter(clientSocket.getOutputStream(), true);
 			getLogger().info("TCP server online");
 		}
 		catch (Exception e) {
@@ -146,18 +150,20 @@ public class python_control extends RoboticsAPIApplication {
 		while (program_running) {
 			try {
 				line = reader.readLine();
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 				program_running = false;
 				break;
 			}
 		    String[] command = line.trim().split(" ");
-		    if (command[0].equalsIgnoreCase("exit")) {
+		    
+		    if (command[0].equalsIgnoreCase("exit"))
+		    {
 		        getLogger().info("'exit' received. Stopping server.");
 		        break;
 		    }
-			else if (command[0].equals("move")) {
+			else if (command[0].equals("move"))
+			{
 				String[] values = line.split(" ");
 				if (values.length==4) {
 					double x = Double.parseDouble(values[1]);
@@ -169,10 +175,12 @@ public class python_control extends RoboticsAPIApplication {
 					getLogger().info("INVALID COMMAND: move takes 3 parameters");
 				}
 			}
-			else if (command[0].equalsIgnoreCase("hi")){
+			else if (command[0].equalsIgnoreCase("hello"))
+			{
 				hello();
 			}
-			else {
+			else
+			{
 				getLogger().info("Unknown command from python: " + line);
 		    }
 		}

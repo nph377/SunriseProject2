@@ -4,6 +4,7 @@ import static com.kuka.roboticsAPI.motionModel.BasicMotions.ptp;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -125,6 +126,8 @@ public class TCP_vca_sweep extends RoboticsAPIApplication {
 	        serverSocket = new ServerSocket(port);
 	        clientSocket = serverSocket.accept();
 	        reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+//	        writer = new PrintWriter(clientSocket.getOutputStream(), true);
+
 	        getLogger().info("TCP server online");
 
 	        String line;
